@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials"
 import { prisma } from "./prisma";
-import * as bcrypt from 'bcrypt';
+import { comparePassword } from "@/actions/users.action";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -25,7 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new Error('User not found');
         }
 
-        const isMatch = await bcrypt.compare(credentials.password as string, user.password as string);
+        const isMatch = await comparePassword(credentials.password as string, user.password as string);
 
         if (!isMatch) {
           throw new Error('Incorrect password');
@@ -34,5 +34,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return user;
       }
     })
-  ]
+  ],
+  pages:{
+    signIn:"/sign-in"
+  }
 });

@@ -16,8 +16,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LuEye, LuEyeOff } from 'react-icons/lu'
 import AuthButton from './AuthButton'
+import { signInUser } from '@/actions/users.action'
 
-const SignInSchema=z.object({
+export const SignInSchema=z.object({
     email:z.string().email(),
     password:z.string().min(8),
 })
@@ -34,8 +35,9 @@ const FormSignIn = () => {
         }
     })
 
-    const onSubmit=(data:z.infer<typeof SignInSchema>)=>{
-        console.log(data)
+    const onSubmit=async(data:z.infer<typeof SignInSchema>)=>{
+       const message=await signInUser(data)
+       console.log(message)
     }
 
   return (

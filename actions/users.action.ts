@@ -1,6 +1,8 @@
 'use server'
 import * as bcrypt from 'bcrypt'
 import { prisma } from "@/lib/prisma"
+import { signIn } from '@/lib/auth'
+import { AuthError } from 'next-auth'
 
 export const createUsers=async(newUser:Partial<User>)=>{
     try {
@@ -16,4 +18,28 @@ export const createUsers=async(newUser:Partial<User>)=>{
         console.log(error)
         return 'Failed to create User'
     }
+}
+
+export const comparePassword=async(password:string,userPassword:string)=>{
+    return await bcrypt.compare(password,userPassword)
+}
+export const signInUser=async(data : Partial<User>)=>{
+    try {
+        await signIn('credentials', {
+            ...data,
+            redirectTo:`/`,
+        })
+        return 'Successfully signed in!'
+    } catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case "CredentialsSignin":
+                    return { error: "Invalid credentials!" }
+                default:
+                    return { error: "Something went wrong!" }
+            }
+        }
+        console.log(error)
+        throw error
+    }   
 }

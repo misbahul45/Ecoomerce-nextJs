@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import { SessionProvider } from "next-auth/react"
+import { auth } from "@/lib/auth";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -12,20 +14,23 @@ export const metadata: Metadata = {
   description: "Created by Misbahul",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session=await auth()
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <Header />
-        <main className="w-full max-w-[90%] mx-auto min-h-[calc(100vh-4rem)]">
-          {children}
-        </main>
-        <Toaster />
-        <Footer />
+        <SessionProvider session={session}>
+          <Header />
+          <main className="w-full max-w-[90%] mx-auto min-h-[calc(100vh-4rem)]">
+            {children}
+          </main>
+          <Toaster />
+          <Footer />
+        </SessionProvider>
       </body>
     </html>
   );

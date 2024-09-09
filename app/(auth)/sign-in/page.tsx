@@ -1,5 +1,5 @@
 import FormSignIn from '@/components/auth/FormSignIn'
-import { LOGIN_IMG } from '@/constans'
+import { LOGIN_IMG } from '@/contans'
 import Link  from 'next/link'
 import Image from 'next/image'
 import React from 'react'
@@ -9,7 +9,7 @@ const page = () => {
   return (
     <section className='w-full min-h-[calc(100vh-4rem)] flex'>
       <div className='w-full max-w-sm h-[calc(100vh-4rem)] flex flex-col justify-center px-4'>
-        <h1 className='text-3xl font-bold text-center mb-4'>Login To Misbahul's Shop</h1>
+        <h1 className='text-3xl font-bold mb-2'>Login To Misbahul's Shop</h1>
         <p className='mb-3'>New to Misbahul's Shop? <Link href={'/sign-up'} className='text-blue-500'>Create an account</Link></p>
         <FormSignIn />
       </div>
