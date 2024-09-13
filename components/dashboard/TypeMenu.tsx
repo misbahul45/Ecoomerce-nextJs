@@ -24,7 +24,6 @@ const TypeMenu = ({ routerType }:Props) => {
     router.push(`/create-post/${type.toLowerCase()}`)
   }, [type])
    
-  console.log(type)
 
   return (
     <>
