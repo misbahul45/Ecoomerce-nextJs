@@ -92,19 +92,6 @@ const FormSignUp = () => {
                 <AuthButton type='Create an account' message={successMessage} />
             </form>
         </Form>
-        <div className='flex items-center gap-2 w-full mt-6 mb-4'>
-            <span className='h-0.5 w-full bg-slate-500 rounded-full'></span>
-            <p>Or</p>
-            <span className='h-0.5 w-full bg-slate-500 rounded-full'></span>
-        </div>
-        <div className='flex gap-2'>
-            <button className='flex-1 text-center py-4 rounded-md shadow-lg shadow-slate-800/50 font-semibold hover:bg-slate-600 hover:text-slate-100 transition-all duration-100'>
-                <span>Google</span>
-            </button>
-            <button className='flex-1 text-center py-4 rounded-md shadow-lg shadow-slate-800/50 font-semibold hover:bg-slate-900 hover:text-slate-100 transition-all duration-100'>
-                <span>Github</span>
-            </button>
-        </div>
     </>
   )
 }

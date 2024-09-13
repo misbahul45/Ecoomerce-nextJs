@@ -1,11 +1,19 @@
 'use server'
 import * as bcrypt from 'bcrypt'
-import { prisma } from "@/lib/prisma"
 import { signIn } from '@/lib/auth'
 import { AuthError } from 'next-auth'
+import prisma from '@/lib/prisma'
 
 export const createUsers=async(newUser:Partial<User>)=>{
     try {
+        const isUserCreated=await prisma.user.findUnique({
+            where:{
+                email:newUser.email
+            }
+        })
+        if(isUserCreated){
+            return 'User already exists'
+        }
         const salt=await bcrypt.genSalt(10)
         if(newUser?.password){
             newUser.password=await bcrypt.hash(newUser.password,salt)
@@ -25,9 +33,25 @@ export const comparePassword=async(password:string,userPassword:string)=>{
 }
 export const signInUser=async(data : Partial<User>)=>{
     try {
+        const user=await prisma.user.findUnique({
+            where:{
+                email:data.email
+            }
+        })
+
+        if(!user){
+            return { error: "Account not found" }
+        }
+
+        const isMatch=await comparePassword(data.password as string,user.password as string)
+
+        if(!isMatch){
+            return { error: "Invalid password, please try again" }
+        }
+
         await signIn('credentials', {
             ...data,
-            redirectTo:`/`,
+            redirectTo:'/'
         })
         return 'Successfully signed in!'
     } catch (error) {
@@ -36,10 +60,10 @@ export const signInUser=async(data : Partial<User>)=>{
                 case "CredentialsSignin":
                     return { error: "Invalid credentials!" }
                 default:
-                    return { error: "Something went wrong!" }
+                    return { error: "Sign In Error" }
             }
         }
-        console.log(error)
         throw error
     }   
+    
 }

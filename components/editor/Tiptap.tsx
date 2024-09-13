@@ -4,11 +4,10 @@ import Toolbar from './Toolbar'
 import { Underline } from '@tiptap/extension-underline'
 
 interface TiptapProps {
-  value: string
   onChange: (value: string) => void
 }
 
-const Tiptap = ({ value, onChange }: TiptapProps) => {
+const Tiptap = ({ onChange }: TiptapProps) => {
   const editor = useEditor({
     extensions: [StarterKit, Underline],
     editorProps:{
@@ -27,7 +26,7 @@ const Tiptap = ({ value, onChange }: TiptapProps) => {
     <div className='w-full'>
       {editor&&(
         <>
-           <Toolbar editor={editor} content={value} />
+           <Toolbar editor={editor} />
            <EditorContent style={{ whiteSpace:'balance' }} editor={editor} />
         </>
       )}

@@ -13,8 +13,10 @@ model User {
   email    String?   @unique
   image    String    @default("https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg")
   password String?
+  role     String    @default("user")
   accounts Account[]
   sessions Session[]
+  posters  Poster[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -48,6 +50,27 @@ model Session {
   userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Poster {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  image  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([image])
+}
+
+model Category {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  category String @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -5,14 +5,12 @@ import { LuBold, LuStrikethrough, LuItalic, LuListOrdered, LuList,LuHeading2, Lu
 
 interface ToolbarProps {
     editor: Editor
-    content:string
 }
 
 
-const Toolbar = ({ editor, content}: ToolbarProps) => {
+const Toolbar = ({ editor }: ToolbarProps) => {
     if(!editor) return null
   return (
-
     <div
       className="px-4 py-3 rounded-tl-md rounded-tr-md flex justify-between items-start
     gap-5 w-full flex-wrap border border-gray-700"
@@ -163,14 +161,6 @@ const Toolbar = ({ editor, content}: ToolbarProps) => {
           <LuRedo className="w-5 h-5" />
         </button>
       </div>
-      {content && (
-        <button
-          type="submit"
-          className="px-4 bg-sky-700 text-white py-2 rounded-md"
-        >
-          Add
-        </button>
-      )}
     </div>
   )
 }

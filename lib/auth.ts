@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials"
-import { prisma } from "./prisma";
+import prisma from "./prisma";
 import { comparePassword } from "@/actions/users.action";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -14,7 +14,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
-
         const user = await prisma.user.findUnique({
           where: {
             email: credentials.email as string
@@ -30,8 +29,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!isMatch) {
           throw new Error('Incorrect password');
         }
-
-        return user;
+        const { password, ...data }=user
+        return data;
       }
     })
   ],

@@ -1,7 +1,5 @@
 'use client'
-import React from 'react'
-
-import { Button } from "@/components/ui/button"
+import React, { useEffect } from 'react'
 import {
   Form,
   FormControl,
@@ -17,6 +15,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { LuEye, LuEyeOff } from 'react-icons/lu'
 import AuthButton from './AuthButton'
 import { signInUser } from '@/actions/users.action'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export const SignInSchema=z.object({
     email:z.string().email(),
@@ -25,6 +25,11 @@ export const SignInSchema=z.object({
 
 const FormSignIn = () => {
     const [showPassword,setShowPassword]=React.useState(false)
+    const [error,setError]=React.useState('')
+
+    const router=useRouter()
+
+
 
     const form=useForm<z.infer<typeof SignInSchema>>({
         mode:'onChange',
@@ -36,12 +41,27 @@ const FormSignIn = () => {
     })
 
     const onSubmit=async(data:z.infer<typeof SignInSchema>)=>{
-       const message=await signInUser(data)
-       console.log(message)
+       const value:any=await signInUser(data)
+       if(value?.error){
+        setError(value?.error)
+       }
+       router.refresh()
     }
 
+    useEffect(() => {
+        if (error) {
+            setTimeout(() => {
+                setError('')
+            }, 3000)
+        }
+    },[error])
   return (
     <>
+        {error && (
+            <p className='py-2 px-4 rounded bg-red-100 text-red-400'>
+                {error}
+            </p>
+        )}
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
                 <FormField
@@ -51,7 +71,7 @@ const FormSignIn = () => {
                     <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                        <Input placeholder="email" {...field} />
+                      <Input placeholder="email" {...field} />
                     </FormControl>
                     <FormMessage />
                     </FormItem>
@@ -62,7 +82,10 @@ const FormSignIn = () => {
                 name="password"
                 render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className='flex justify-between items-center'>
+                        <span>Password</span>
+                        <Link href={'/forgot-password'} className='text-blue-400 text-sm'>Forgot your password?</Link>
+                    </FormLabel>
                     <FormControl>
                         <div className='relative'>
                             <Input placeholder="Password" type={showPassword?'text':'password'} {...field} />
@@ -78,19 +101,6 @@ const FormSignIn = () => {
                 <AuthButton type='sign-in' message='' />
             </form>
         </Form>
-        <div className='flex items-center gap-2 w-full mt-6 mb-4'>
-            <span className='h-0.5 w-full bg-slate-500 rounded-full'></span>
-            <p>Or</p>
-            <span className='h-0.5 w-full bg-slate-500 rounded-full'></span>
-        </div>
-        <div className='flex gap-2'>
-            <button className='flex-1 text-center py-4 rounded-md shadow-lg shadow-slate-800/50 font-semibold hover:bg-slate-600 hover:text-slate-100 transition-all duration-100'>
-                <span>Google</span>
-            </button>
-            <button className='flex-1 text-center py-4 rounded-md shadow-lg shadow-slate-800/50 font-semibold hover:bg-slate-900 hover:text-slate-100 transition-all duration-100'>
-                <span>Github</span>
-            </button>
-        </div>
     </>
   )
 }

@@ -16,11 +16,12 @@ const AuthButton = ({message, type}:Props) => {
     useEffect(() => {
         if(message){
             toast({
-                ...(message.includes('Failed') && { variant:'destructive' }),
-                ...(message.includes('Failed') && { action: <ToastAction altText="Try again">Try again</ToastAction> }),
+                ...((message.includes('Failed') || message.includes('exists')) && { variant:'destructive' }),
+                ...((message.includes('Failed')|| message.includes('exists')) && { action: <ToastAction altText="Try again">Try again</ToastAction> }),
                 description:message
             })
             message.includes('Success') && router.push('/sign-in')
+            message.includes('exists') && router.push('/sign-in')
         }
     },[message,toast])
   return (
