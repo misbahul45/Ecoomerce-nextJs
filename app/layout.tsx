@@ -12,7 +12,6 @@ import UserMenu from "@/components/layout/UserMenu";
 import prisma  from "@/lib/prisma";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
-
 export const metadata: Metadata = {
   title: "Misbahul's Shop",
   description: "Created by Misbahul",

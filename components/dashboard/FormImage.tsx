@@ -3,6 +3,7 @@ import React from 'react';
 import { useToast } from '../ui/use-toast';
 import Image from 'next/image';
 import { FaImages } from 'react-icons/fa';
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 interface Props {
   images: string[];
@@ -23,6 +24,15 @@ const FormImage: React.FC<Props> = ({ images, dispatch, setImages }) => {
     }
   };
 
+  const removeImage=(index:number)=>{
+    const newImages=images.filter((_,i)=>i!==index)
+    if(dispatch){
+      dispatch({ type: 'SET_IMAGES', payload: newImages });
+    }else if(setImages){
+      setImages(newImages)
+    }
+  }
+
   console.log(images)
   const handleUploadError = (error: Error) => {
     toast({
@@ -31,6 +41,10 @@ const FormImage: React.FC<Props> = ({ images, dispatch, setImages }) => {
       variant: 'destructive',
     });
   };
+
+  React.useEffect(() => {
+    setShowImageIndex(0);
+  }, [images]);
 
   return (
     <div>
@@ -48,7 +62,7 @@ const FormImage: React.FC<Props> = ({ images, dispatch, setImages }) => {
             <FaImages className="w-full h-[70%] text-slate-200 hover:text-slate-500" />
           )}
         </div>
-        {images.length > 1 && (
+        {images.length > 0 && (
           <div className="flex lg:flex-col flex-row gap-2 max-h-[75vh] overflow-auto">
             {images.map((image, index) => (
               <div
@@ -63,6 +77,9 @@ const FormImage: React.FC<Props> = ({ images, dispatch, setImages }) => {
                   height={500}
                   className="w-full h-full object-cover object-center rounded-lg shadow-lg shadow-slate-500/20"
                 />
+                <button type='button' onClick={()=>removeImage(index)} className='absolute top-2 right-4 text-slate-100 bg-red-500 p-2 rounded-full shadow-xl shadow-slate-500/20 hover:scale-105 transition-all duration-100'>
+                  <RiDeleteBin6Line size={18} />
+                </button>
               </div>
             ))}
           </div>
