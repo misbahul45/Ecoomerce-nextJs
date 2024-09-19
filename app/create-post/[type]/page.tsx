@@ -1,8 +1,8 @@
-import FormCategory from '@/components/dashboard/FormCategory'
-import FormPoster from '@/components/dashboard/FormPoster'
-import FormProducts from '@/components/dashboard/FormProducts'
-import TypeMenu from '@/components/dashboard/TypeMenu'
-import Editor from '@/components/editor/Editor'
+import FormCategory from '@/components/create-post/FormCategory'
+import FormPoster from '@/components/create-post/FormPoster'
+import FormProducts from '@/components/create-post/FormProducts'
+import TypeMenu from '@/components/create-post/TypeMenu'
+import prisma from '@/lib/prisma'
 import React from 'react'
 
 interface Props{
@@ -11,15 +11,16 @@ interface Props{
   }
 }
 
-const page = ({ params: { type } }:Props) => {
+const page = async ({ params: { type } }:Props) => {
+  const categories=await prisma.category.findMany({})
   return (
-    <section className='relative w-full'>
+    <section className='relative w-full rounded-xl'>
       <div className="flex flex-col items-center my-4">
         <h1 className='text-3xl font-bold text-center mb-4 capitalize'>Create {type}</h1>
 
         <TypeMenu routerType={type} />
       </div>
-      {type === 'products'&& <FormProducts /> }
+      {type === 'products'&& <FormProducts categories={categories} /> }
       {type === 'category' && <FormCategory />}
       {type === 'poster' && <FormPoster />}
     </section>

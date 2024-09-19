@@ -12,10 +12,10 @@ const Toolbar = ({ editor }: ToolbarProps) => {
     if(!editor) return null
   return (
     <div
-      className="px-4 py-3 rounded-tl-md rounded-tr-md flex justify-between items-start
+      className="px-4 py-3 rounded-tl-md rounded-tr-md flex items-start
     gap-5 w-full flex-wrap border border-gray-700"
     >
-      <div className="flex justify-start items-center gap-5 w-full lg:w-10/12 flex-wrap ">
+      <div className="flex md:justify-start justify-center items-center gap-5 w-full lg:w-10/12 flex-wrap ">
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -27,7 +27,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
               : "text-sky-400"
           }
         >
-          <LuBold className="w-5 h-5" />
+          <LuBold className="lg:w-5 lg:h-5 w-3 h-3" />
         </button>
         <button
           onClick={(e) => {
@@ -40,7 +40,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
               : "text-sky-400"
           }
         >
-          <LuItalic className="w-5 h-5" />
+          <LuItalic className="lg:w-5 lg:h-5 w-3 h-3" />
         </button>
         <button
           onClick={(e) => {
@@ -53,7 +53,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
               : "text-sky-400"
           }
         >
-          <LuUnderline className="w-5 h-5" />
+          <LuUnderline className="lg:w-5 lg:h-5 w-3 h-3" />
         </button>
         <button
           onClick={(e) => {
@@ -66,7 +66,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
               : "text-sky-400"
           }
         >
-          <LuStrikethrough className="w-5 h-5" />
+          <LuStrikethrough className="lg:w-5 lg:h-5 w-3 h-3" />
         </button>
         <button
           onClick={(e) => {
@@ -79,7 +79,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
               : "text-sky-400"
           }
         >
-          <LuHeading2 className="w-5 h-5" />
+          <LuHeading2 className="lg:w-5 lg:h-5 w-3 h-3" />
         </button>
 
         <button
@@ -93,7 +93,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
               : "text-sky-400"
           }
         >
-          <LuList className="w-5 h-5" />
+          <LuList className="lg:w-5 lg:h-5 w-3 h-3" />
         </button>
         <button
           onClick={(e) => {
@@ -106,7 +106,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
               : "text-sky-400"
           }
         >
-          <LuListOrdered className="w-5 h-5" />
+          <LuListOrdered className="lg:w-5 lg:h-5 w-3 h-3" />
         </button>
         <button
           onClick={(e) => {
@@ -119,7 +119,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
               : "text-sky-400"
           }
         >
-          <LuQuote className="w-5 h-5" />
+          <LuQuote className="lg:w-5 lg:h-5 w-3 h-3" />
         </button>
         <button
           onClick={(e) => {
@@ -132,7 +132,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
               : "text-sky-400 hover:bg-sky-700 hover:text-white p-1 hover:rounded-lg"
           }
         >
-          <LuUndo className="w-5 h-5" />
+          <LuUndo className="lg:w-5 lg:h-5 w-3 h-3" />
         </button>
         <button
           onClick={(e) => {
@@ -145,7 +145,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
               : "text-sky-400 hover:bg-sky-700 hover:text-white p-1 hover:rounded-lg"
           }
         >
-          <LuRedo className="w-5 h-5" />
+          <LuRedo className="lg:w-5 lg:h-5 w-3 h-3" />
         </button>
       </div>
     </div>

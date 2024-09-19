@@ -1,93 +1,94 @@
-"use client";
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import { StaticImageData } from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
+'use client';
+import React from 'react';
+import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../ui/carousel';
+import Image from 'next/image';
 
 interface Props {
   images: string[];
 }
 
+const CarouselPoster = ({ images }: Props) => {
+  const [api, setApi] = React.useState<CarouselApi | undefined>(undefined);
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(images.length);
 
-export default function CarouselPoster({ images }: Props): JSX.Element {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
+  React.useEffect(() => {
+    if (!api) return;
 
-  const prevSlide = (): void => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
+    // Update count and current slide
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap());
 
-  const nextSlide = (): void => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
+    const handleSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
 
+    api.on('select', handleSelect);
 
-  useEffect(() => {
-    if (!isHovered) {
-      const interval = setInterval(() => {
-        nextSlide();
-      }, 3000);
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 10000);
 
-      return () => {
-        clearInterval(interval);
-      };
+    return () => {
+      api.off('select', handleSelect);
+      clearInterval(interval);
+    };
+  }, [api]);
+
+  const handlePrevious = () => {
+    if (api) {
+      api.scrollPrev();
     }
-  }, [isHovered]);
-
-  const handleMouseOver = (): void => {
-    setIsHovered(true);
   };
 
-  const handleMouseLeave = (): void => {
-    setIsHovered(false);
+  const handleNext = () => {
+    if (api) {
+      api.scrollNext();
+    }
   };
 
   return (
-    <div className="relative w-full mx-auto mt-4">
-      <div
-        className="relative h-[460px] mx-12 group hover:-translate-y-2"
-        onMouseOver={handleMouseOver}
-        onMouseLeave={handleMouseLeave}
-      >
-        <Image
-          src={images[currentIndex]}
-          alt={`Slider Image ${currentIndex + 1}`}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-xl transition-all duration-500 ease-in-out cursor-pointer"
-        />
-      </div>
-      {images.length>1 &&(
+    <Carousel setApi={setApi} className="w-full relative animate-1-pulse">
+      <CarouselContent>
+        {images.map((image, index) => (
+          <CarouselItem key={index} className="w-full lg:h-[75vh] md:h-[50vh] h-[40vh]">
+            <Image
+              src={image}
+              alt={`Poster ${index + 1}`}
+              width={300}
+              height={300}
+              className="w-full h-full object-cover rounded-xl shadow-xl shadow-slate-800/20"
+            />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      {images.length > 1 && (
         <>
-          <button
-          className="absolute left-0 top-1/2 transform h-[459px] rounded-xl hover:bg-[#1a222f] mx-1 -mt-[10px] -translate-y-1/2 bg-[#111927] text-white p-2 group"
-          onClick={prevSlide}
-          >
-            <ChevronLeft className="text-gray-400 group-hover:text-white" />
-          </button>
-          <button
-            className="absolute right-0 top-1/2 transform h-[459px] rounded-xl hover:bg-[#1a222f] mx-1 -mt-[10px] -translate-y-1/2 bg-[#111927] text-white p-2 group"
-            onClick={nextSlide}
-          >
-            <ChevronRight className="text-gray-400 group-hover:text-white" />
-          </button>
+          <CarouselPrevious
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10"
+            aria-label="Previous slide"
+            onClick={handlePrevious}
+          />
+          <CarouselNext
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10"
+            aria-label="Next slide"
+            onClick={handleNext}
+          />
         </>
       )}
-      <div className="flex justify-center mt-4">
-        {images?.map((_, index) => (
-          <div
-            key={index}
-            className={`h-1 w-10 mx-1 ${
-              index === currentIndex
-                ? "bg-[#beff46] rounded-xl"
-                : "bg-gray-300 rounded-xl"
-            } transition-all duration-500 ease-in-out`}
-          ></div>
+      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1 mb-2">
+        {[...Array(count)].map((_, i) => (
+          <button
+            key={i}
+            onClick={() => api?.scrollTo(i)}
+            className={`w-6 h-1 rounded-full ${
+              current === i ? "bg-white" : "bg-white/30"
+            }`}
+          />
         ))}
       </div>
-    </div>
+    </Carousel>
   );
-}
+};
+
+export default CarouselPoster;

@@ -9,7 +9,7 @@ interface Props{
 
 const page = ({ params:{ type } }:Props) => {
   return (
-    <section className='w-full h-[calc(100vh-4rem)]'>
+    <section className='w-full h-[calc(100vh-4rem)] rounded-xl'>
       {type==='show'?<ShowProfile />:null}
     </section>
   )

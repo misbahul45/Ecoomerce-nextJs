@@ -17,11 +17,7 @@ import AuthButton from './AuthButton'
 import { signInUser } from '@/actions/users.action'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-
-export const SignInSchema=z.object({
-    email:z.string().email(),
-    password:z.string().min(8),
-})
+import { SignInSchema } from '@/schema/auth.schema'
 
 const FormSignIn = () => {
     const [showPassword,setShowPassword]=React.useState(false)

@@ -27,7 +27,7 @@ const Tiptap = ({ onChange }: TiptapProps) => {
       {editor&&(
         <>
            <Toolbar editor={editor} />
-           <EditorContent style={{ whiteSpace:'balance' }} editor={editor} />
+           <EditorContent style={{ whiteSpace:'balance' }} editor={editor}  />
         </>
       )}
     </div>

@@ -17,19 +17,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { LuEye, LuEyeOff } from 'react-icons/lu'
 import { createUsers } from '@/actions/users.action'
 import AuthButton from './AuthButton'
+import { SignUpSchema } from '@/schema/auth.schema'
 
-const SignInSchema=z.object({
-    name:z.string().min(3),
-    email:z.string().email(),
-    password:z.string().min(8),
-})
 
 const FormSignUp = () => {
     const [showPassword,setShowPassword]=React.useState(false)
     const [successMessage,setSuccessMessage]=React.useState('')
-    const form=useForm<z.infer<typeof SignInSchema>>({
+    const form=useForm<z.infer<typeof SignUpSchema>>({
         mode:'onChange',
-        resolver:zodResolver(SignInSchema),
+        resolver:zodResolver(SignUpSchema),
         defaultValues:{
             name:'',
             email:'',
@@ -37,7 +33,7 @@ const FormSignUp = () => {
         }
     })
 
-    const onSubmit=async(data:z.infer<typeof SignInSchema>)=>{
+    const onSubmit=async(data:z.infer<typeof SignUpSchema>)=>{
         const message=await createUsers(data)
         setSuccessMessage(message)
     }

@@ -20,7 +20,7 @@ const config = {
     },
     extend: {
       gridTemplateColumns: {
-        "auto-fill": "repeat(auto-fill, minmax(10rem, 1fr))",
+        "auto-fill": "repeat(auto-fill, minmax(240px, 1fr))",
       },
       colors: {
         border: "hsl(var(--border))",

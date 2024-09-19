@@ -3,7 +3,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <section className='w-full h-[calc(100vh-4rem)] flex flex-col justify-center items-center max-w-xl mx-auto'>
+    <section className='w-full h-[calc(100vh-4rem)] flex flex-col justify-center items-center max-w-xl mx-auto rounded-xl'>
         <div className='lg:px-6 lg:py-2.5 px-3 py-1.5 rounded bg-gradient-to-r from-blue-700 via-violet-600 to-blue-500 text-slate-100 font-bold shadow-xl shadow-black/20'>
           Misbahul's Shop
         </div>

@@ -26,29 +26,29 @@ const Header = ({data, categories}:Props) => {
           Misbahul's Shop
         </Link>
         <nav className='flex-1 md:block hidden'>
-          <ul className='flex items-center gap-6'>
-            <li>
+          <div className='flex items-center gap-4'>
+            <div>
               <Link href={'/'} className={`font-semibold hover:text-black transition-all duration-100 ${(pathName==='/') ?'text-black' : 'text-slate-400'}`}>Home</Link>
-            </li>
-            <li>
+            </div>
+            <div>
               <Link href={'/store'} className={`font-semibold hover:text-black transition-all duration-100 ${(pathName==='/store') ?'text-black' : 'text-slate-400'}`}>Store</Link>
-            </li>
+            </div>
             {categories?.map((category, index)=>(
-              <li key={index}>
+              <div key={index}>
                 <Link href={'/store/'+category.toLowerCase().replace(' ', '-')} className={`font-semibold capitalize hover:text-blue-600 transition-all duration-100 ${pathName.includes(category.toLowerCase().replace(' ', '-')) ? "text-blue-600" : "text-blue-200"}`}>{category}</Link>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         </nav>
       </div>
       {data?.user?(
         <>
-  `        <div className='md:flex hidden items-center md:gap-4 gap-1'>
+  `        <div className='flex items-center md:gap-4 gap-1'>
               <SearchButton icon={<FiSearch size={25} />} />
               <Link href={'/cart'} className='rounded-full p-2 hover:bg-slate-100'>
                 <GrCart size={25} />
               </Link>
-              <Button onClick={toggleUserMenu} variant={'ghost'} className='rounded-full p-2 border-0'>
+              <Button onClick={toggleUserMenu} variant={'ghost'} className='md:block hidden rounded-full p-2 border-0'>
                 <FiUser size={25} />
               </Button>
           </div>

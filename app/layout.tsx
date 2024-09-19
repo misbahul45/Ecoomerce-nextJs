@@ -37,7 +37,7 @@ export default async function RootLayout({
         <SearchProvider>
           <SessionProvider session={session}>
             <Header categories={categories} data={{ user: session?.user || undefined }} />
-            <main className="w-full max-w-[95%] overflow-hidden mx-auto min-h-[calc(100vh-4rem)] relative">
+            <main className="w-full max-w-[95%] overflow-hidden mx-auto min-h-[calc(100vh-4rem)] relative bg-garay-100">
               {children}
               <SearchList />
               <UserMenu role={(user?.role as 'admin' | 'user') ||'user'} user={session?.user as User || undefined} />

@@ -57,12 +57,11 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -86,4 +85,32 @@
   background-color: var(--secondary);
   border-radius: 14px;
   border: 3px solid var(--primary);
+}
+
+p {
+  @apply lg:text-[15px] text-[12px] tracking-wider;
+}
+
+h1 {
+  @apply lg:text-2xl text-lg font-semibold;
+}
+
+h2 {
+  @apply lg:text-xl text-[15px];
+}
+
+h3 {
+  @apply lg:text-lg text-[12px];
+}
+
+ul {
+  @apply list-outside;
+}
+
+ul > li {
+  @apply list-disc;
+}
+
+ul > ol {
+  @apply list-decimal;
 }

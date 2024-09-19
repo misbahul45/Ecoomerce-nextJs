@@ -18,7 +18,7 @@ const FormImage: React.FC<Props> = ({ images, dispatch, setImages }) => {
   const handleClientUploadComplete = (res: any) => {
     const newImageUrls = res.map((image: any) => image.appUrl);
     if(dispatch){
-      dispatch({ type: 'SET_IMAGES', payload: newImageUrls });
+      dispatch({ type: 'SET_IMAGES', payload: [...images, ...newImageUrls] });
     }else if(setImages){
       setImages(prev=>[...prev, ...newImageUrls])
     }
@@ -33,7 +33,6 @@ const FormImage: React.FC<Props> = ({ images, dispatch, setImages }) => {
     }
   }
 
-  console.log(images)
   const handleUploadError = (error: Error) => {
     toast({
       title: 'Error',
@@ -49,17 +48,17 @@ const FormImage: React.FC<Props> = ({ images, dispatch, setImages }) => {
   return (
     <div>
       <div className="flex lg:flex-row flex-col lg:gap-4 gap-2 mb-4">
-        <div className="flex-1 h-[75vh] relative border-2 border-t-slate-200 rounded-xl flex justify-center items-center">
+        <div className="flex-1 relative border-2 border-t-slate-200 rounded-xl flex justify-center items-center">
           {images.length > 0 ? (
             <Image
               src={images[showImageIndex]}
               alt="Selected image"
               width={500}
               height={500}
-              className="w-full h-full object-cover object-center rounded-xl shadow-xl shadow-slate-500/20"
+              className="w-full lg:h-[75vh] md:h-[50vh] h-[30vh] object-cover rounded-xl shadow-xl shadow-slate-500/20"
             />
           ) : (
-            <FaImages className="w-full h-[70%] text-slate-200 hover:text-slate-500" />
+            <FaImages className="w-[70%] h-[70%] text-slate-200 hover:text-slate-500" />
           )}
         </div>
         {images.length > 0 && (
@@ -68,7 +67,7 @@ const FormImage: React.FC<Props> = ({ images, dispatch, setImages }) => {
               <div
                 onClick={() => setShowImageIndex(index)}
                 key={index}
-                className="w-64 h-48 relative cursor-pointer"
+                className="lg:w-64 md:w-48 w-28 lg:h-48 md:h-32 h-16 relative cursor-pointer"
               >
                 <Image
                   src={image}
@@ -77,7 +76,7 @@ const FormImage: React.FC<Props> = ({ images, dispatch, setImages }) => {
                   height={500}
                   className="w-full h-full object-cover object-center rounded-lg shadow-lg shadow-slate-500/20"
                 />
-                <button type='button' onClick={()=>removeImage(index)} className='absolute top-2 right-4 text-slate-100 bg-red-500 p-2 rounded-full shadow-xl shadow-slate-500/20 hover:scale-105 transition-all duration-100'>
+                <button type='button' onClick={()=>removeImage(index)} className='absolute top-2 md:right-4 right-1 text-slate-100 bg-red-500 p-2 rounded-full shadow-xl shadow-slate-500/20 hover:scale-105 transition-all duration-100'>
                   <RiDeleteBin6Line size={18} />
                 </button>
               </div>

@@ -4,10 +4,12 @@ import FormImage from "./FormImage"
 import { Button } from "../ui/button"
 import { useToast } from "../ui/use-toast"
 import { createNewPoster } from "@/actions/poster.actions"
+import { useRouter } from "next/navigation"
 
 const FormPoster = () => {
     const [images,setImages]=React.useState<string[]>([])
     const { toast }=useToast()
+    const router=useRouter()
 
     const onSubmit=async(e:React.FormEvent)=>{
       e.preventDefault()
@@ -16,6 +18,8 @@ const FormPoster = () => {
         description:res ? 'Poster created successfully' : 'Poster already exists',
         variant:res ?'default':'destructive'
       })
+      setImages([])
+      router.refresh()
     }
 
   return (
