@@ -3,9 +3,9 @@ import { z } from "zod";
 export const CreateProductSchema=z.object({
     name:z.string().min(3,{message:'name must be at least 3 characters'}),
     description:z.string().min(3,{message:'description must be at least 3 characters'}),
-    price:z.number({message:'price must be a number'}).min(1),
+    price:z.number({message:'price must be a number'}).min(1,{ message: 'price must be at least 1' }),
     images:z.array(z.string()).min(1),
-    stock:z.number({message:'stock must be a number'}).min(1),
+    stock:z.number({message:'stock must be a number'}).min(1, { message: 'stock must be at least 1' }),
     brand:z.string().optional(),
     material:z.string().optional(),
     style:z.string().optional(),

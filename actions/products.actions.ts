@@ -17,12 +17,13 @@ const createSlug=(title:string)=>{
 export const createNewProducts=async(product:CreateProduct)=>{
     const validation=CreateProductSchema.safeParse(product)
     const slug=createSlug(product.name)
-    console.log(validation.error)
-    if(!validation.success){
-        return { succes:false, message:validation.error.errors[0].message }
-    }
 
     try {
+        
+        if(!validation.success){
+            return { succes:false, message:validation.error.errors[0].message }
+        }
+
         await prisma.product.create({
             data:{
                 ...product,

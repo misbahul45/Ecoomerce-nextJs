@@ -9,6 +9,7 @@ import SelectProductType from './SelectProductType';
 import { createNewProducts } from '@/actions/products.actions';
 import { useToast } from '../ui/use-toast';
 import { useRouter } from 'next/navigation';
+import Loader from '../ui/Loader';
 
 
 interface Props{
@@ -50,6 +51,8 @@ const ACTIONS = {
   SET_TYPE: 'SET_TYPE',
 };
 
+export const sleep = (ms: number = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const reducer = (state:any, action:any) => {
   switch (action.type) {
     case ACTIONS.SET_NAME:
@@ -89,18 +92,22 @@ const reducer = (state:any, action:any) => {
 
 const FormProducts = ({ categories }:Props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [loading, setLoading] = React.useState(false);
   const router=useRouter()
 
   const { toast }=useToast()
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const message = await createNewProducts(state);
+    setLoading(true);
+    sleep()
+    const message = await createNewProducts(state)
     toast({
+      title:'',
       description: message.message,
-      variant: message.succes?'default':'destructive'
+      variant: message.success?'default':'destructive'
     })
-    if(message.succes){
+    if(message.success){
       dispatch({ type: ACTIONS.SET_NAME, payload: '' });
       dispatch({ type: ACTIONS.SET_DESCRIPTION, payload: '' });
       dispatch({ type: ACTIONS.SET_PRICE, payload: 0.0 });
@@ -116,6 +123,7 @@ const FormProducts = ({ categories }:Props) => {
       dispatch({ type: ACTIONS.SET_LOCATION, payload: '' });
       dispatch({ type: ACTIONS.SET_TYPE, payload: '' });
     }
+    setLoading(false);
     router.refresh()
   };
 
@@ -149,7 +157,7 @@ const FormProducts = ({ categories }:Props) => {
           <label htmlFor="price" className='flex-1'>
             <p className='text-slate-500 font-semibold mb-1'>Price</p>
             <input
-              type="text"
+              type="number"
               inputMode='numeric'
               id='price'
               placeholder="Price"
@@ -233,7 +241,16 @@ const FormProducts = ({ categories }:Props) => {
           />
         </label>
         <SelectProductType dispatch={dispatch} value={state.type} />
-        <Button type='submit' className='w-full'>Post Product</Button>
+        <Button type='submit' className='w-full'>
+          {loading?
+            <div className='flex items-center gap-2'>
+              <p>Creating Product</p>
+              <Loader size='4' />
+            </div>
+            :
+            "Create Product"
+          }
+        </Button>
       </form>
     </div>
   );
