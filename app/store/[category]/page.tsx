@@ -27,7 +27,7 @@ const page = async({ params: { category } }: pageProps) => {
       <h1 className='my-6 capitalize'>{category}</h1>
       <div className='grid grid-cols-auto-fill gap-4'>
         {products.map((product:Product)=>(
-          <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} />
+          <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} price={product.price} />
         ))}
       </div>
     </section>

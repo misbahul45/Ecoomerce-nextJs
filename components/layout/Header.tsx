@@ -24,7 +24,7 @@ const Header = ({data, categories}:Props) => {
     <header className='w-full sticky top-0 left-0 h-16 flex items-center justify-between backdrop-blur-md bg-white/30 lg:px-12 md:px-8 px-2 z-50'>
       <div className='flex-1 flex items-center relative gap-8'>
         <Link href={'/'} className='lg:px-6 lg:py-2.5 px-3 py-1.5 rounded bg-gradient-to-r from-blue-700 via-violet-600 to-blue-500 text-slate-100 font-bold shadow-xl shadow-black/20'>
-          Misbahul's Shop
+          Misbahul&apos;s Shop
         </Link>
         <nav className='flex-1 md:block hidden'>
           <div className='flex items-center gap-4'>
@@ -36,7 +36,7 @@ const Header = ({data, categories}:Props) => {
             </div>
             {categories?.map((category, index)=>(
               <div key={index}>
-                <Link href={'/store/'+category.toLowerCase().replace(' ', '-')} className={`font-semibold capitalize hover:text-blue-600 transition-all duration-100 ${pathName.includes(category.toLowerCase().replace(' ', '-')) && pathName.includes('/store') ? "text-blue-600" : "text-blue-200"}`}>{category}</Link>
+                <Link href={'/store/'+category.replace(' ', '-')} className={`font-semibold capitalize hover:text-blue-600 transition-all duration-100 ${pathName.includes(category.replace(' ', '-')) && pathName.includes('/store') ? "text-blue-600" : "text-blue-200"}`}>{category}</Link>
               </div>
             ))}
           </div>

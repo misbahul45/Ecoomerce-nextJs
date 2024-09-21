@@ -22,7 +22,7 @@ const DisplayProducts = async({ category }:Props) => {
       <h1>{category.category}</h1>
       <div className='grid grid-cols-auto-fill gap-4'>
         {products.map((product)=>(
-          <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} />
+          <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} price={product.price} />
         ))}
       </div>
     </>

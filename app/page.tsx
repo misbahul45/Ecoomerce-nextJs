@@ -12,14 +12,14 @@ const page = async() => {
       where:{
           type:'FEATURE'
       },
-      take:4
+      take:10
   }) as Product[]
 
   const sellProducts=await prisma.product.findMany({
       where:{
           type:'SELL'
       },
-      take:8
+      take:10
   }) as Product[]
 
 
@@ -28,12 +28,12 @@ const page = async() => {
       {allPoster.length>0 && <CarouselPoster images={allPoster.map((poster)=>poster.image)} />}
         <Products title='Feature Products'>
           {featureProducts.map((product:Product)=>(
-              <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} />
+              <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} price={product.price} />
           ))}
         </Products>
         <Products title='Sell Products'>
           {sellProducts.map((product:Product,index)=>(
-                <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} />
+                <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} price={product.price} />
           ))}
         </Products> 
     </section>
