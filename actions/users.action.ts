@@ -18,8 +18,13 @@ export const createUsers=async(newUser:Partial<User>)=>{
         if(newUser?.password){
             newUser.password=await bcrypt.hash(newUser.password,salt)
         }
-        await prisma.user.create({
+        const user=await prisma.user.create({
             data:newUser
+        })
+        await prisma.cart.create({
+            data:{
+                userId:user.id
+            }
         })
         return 'Successfully created User'
     } catch (error) {

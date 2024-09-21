@@ -17,7 +17,6 @@ const createSlug=(title:string)=>{
 export const createNewProducts=async(product:CreateProduct)=>{
     const validation=CreateProductSchema.safeParse(product)
     const slug=createSlug(product.name)
-
     try {
         
         if(!validation.success){
