@@ -1,7 +1,8 @@
-import ProductImages from '@/components/prodcts/ProductImages'
+import ProductImages from '@/components/products/ProductImages'
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import React from 'react'
+
 
 interface Props {
     params:{
@@ -19,8 +20,8 @@ const page = async({ params: { slug } }: Props) => {
   if(!product) return notFound()
 
   return (
-    <section className='w-full'>
-      <div className='flex gap-2 '>
+    <section className='w-full pb-8 pt-2 px-4'>
+      <div className='flex gap-2 my-4'>
         <ProductImages images={product?.images as string[]} />
       </div>
     </section>

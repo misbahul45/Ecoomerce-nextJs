@@ -2,7 +2,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import React from 'react'
 import { FaRegUser } from "react-icons/fa";
-import { SearchContext } from './SearchProvider';
+import { Context } from './Provider';
 import { GrLogout } from "react-icons/gr";
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const UserMenu = ({ user, role }:Props) => {
-    const { showUserMenu, toggleUserMenu }=React.useContext(SearchContext)
+    const { showUserMenu, toggleUserMenu }=React.useContext(Context)
     const router=useRouter()
 
     const toRouter=(route:string)=>{

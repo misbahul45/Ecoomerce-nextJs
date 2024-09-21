@@ -122,6 +122,7 @@ const FormProducts = ({ categories }:Props) => {
       dispatch({ type: ACTIONS.SET_COLORS, payload: [] });
       dispatch({ type: ACTIONS.SET_LOCATION, payload: '' });
       dispatch({ type: ACTIONS.SET_TYPE, payload: '' });
+      router.push('/store')
     }
     setLoading(false);
     router.refresh()
@@ -245,7 +246,7 @@ const FormProducts = ({ categories }:Props) => {
           {loading?
             <div className='flex items-center gap-2'>
               <p>Creating Product</p>
-              <Loader size='4' />
+              <Loader size='4' color='white' />
             </div>
             :
             "Create Product"

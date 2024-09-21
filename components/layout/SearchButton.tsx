@@ -1,12 +1,12 @@
 'uae client'
 import React from 'react'
-import { SearchContext } from './SearchProvider'
+import { Context } from './Provider'
 interface Props {
     icon:JSX.Element
 }
 
 const SearchButton = ({icon}:Props) => {
-    const { toggleSearch }=React.useContext(SearchContext)
+    const { toggleSearch }=React.useContext(Context)
     const search=()=>{
         toggleSearch()
     }

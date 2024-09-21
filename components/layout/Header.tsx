@@ -7,7 +7,8 @@ import { usePathname } from 'next/navigation';
 import { FiSearch, FiUser } from "react-icons/fi";
 import { Button } from '../ui/button';
 import SearchButton from './SearchButton';
-import { SearchContext } from './SearchProvider';
+import { Context } from './Provider';
+import path from 'path';
 
 
 interface Props{
@@ -17,7 +18,7 @@ interface Props{
 
 const Header = ({data, categories}:Props) => {
     const pathName=usePathname()
-    const { toggleUserMenu }=React.useContext(SearchContext)
+    const { toggleUserMenu }=React.useContext(Context)
 
   return (
     <header className='w-full sticky top-0 left-0 h-16 flex items-center justify-between backdrop-blur-md bg-white/30 lg:px-12 md:px-8 px-2 z-50'>
@@ -35,7 +36,7 @@ const Header = ({data, categories}:Props) => {
             </div>
             {categories?.map((category, index)=>(
               <div key={index}>
-                <Link href={'/store/'+category.toLowerCase().replace(' ', '-')} className={`font-semibold capitalize hover:text-blue-600 transition-all duration-100 ${pathName.includes(category.toLowerCase().replace(' ', '-')) ? "text-blue-600" : "text-blue-200"}`}>{category}</Link>
+                <Link href={'/store/'+category.toLowerCase().replace(' ', '-')} className={`font-semibold capitalize hover:text-blue-600 transition-all duration-100 ${pathName.includes(category.toLowerCase().replace(' ', '-')) && pathName.includes('/store') ? "text-blue-600" : "text-blue-200"}`}>{category}</Link>
               </div>
             ))}
           </div>

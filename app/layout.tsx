@@ -4,12 +4,12 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/toaster";
-import { SessionProvider } from "next-auth/react"
 import { auth } from "@/lib/auth";
-import SearchProvider from "@/components/layout/SearchProvider";
+import Provider from "@/components/layout/Provider";
 import SearchList from "@/components/layout/SearchList";
 import UserMenu from "@/components/layout/UserMenu";
 import prisma  from "@/lib/prisma";
+import { SessionProvider } from "next-auth/react";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
 export const metadata: Metadata = {
@@ -28,24 +28,29 @@ export default async function RootLayout({
       email:session?.user?.email as string
     }
   }) : null
-
   const categoriesData=await prisma.category.findMany({})
   const categories=categoriesData?.map((category)=>category.category)
+
+  const products=await prisma.product.findMany({
+    orderBy:{
+      createdAt:'desc'
+    }
+  }) as Product[]
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <SearchProvider>
+        <Provider>
           <SessionProvider session={session}>
             <Header categories={categories} data={{ user: session?.user || undefined }} />
             <main className="w-full max-w-[95%] overflow-hidden mx-auto min-h-[calc(100vh-4rem)] relative bg-garay-100">
               {children}
-              <SearchList />
+              <SearchList categories={categoriesData} products={products} />
               <UserMenu role={(user?.role as 'admin' | 'user') ||'user'} user={session?.user as User || undefined} />
             </main>
             <Toaster />
             <Footer />
           </SessionProvider>
-        </SearchProvider>
+        </Provider>
       </body>
     </html>
   );
