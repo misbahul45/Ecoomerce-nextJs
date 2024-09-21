@@ -78,12 +78,21 @@ const config = {
           to:{
             opacity:"1"
           }
+        },
+        "left":{
+          from:{
+            transform:"translateX(-20%)"
+          },
+          to:{
+            transform:"translateX(0)"
+          }
         }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "1-pulse":"1-pulse 1.2s ease-in-out", 
+        "left":"left 0.2s linear"
       },
     },
   },

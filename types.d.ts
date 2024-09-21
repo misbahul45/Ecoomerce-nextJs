@@ -23,7 +23,7 @@ interface Product {
     price: number;
     images: string[];
     stock: number;
-    purchesed?: number;
+    purchesed: number;
     brand?: string;
     material?: string;
     style?: string;
