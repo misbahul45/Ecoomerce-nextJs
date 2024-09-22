@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React from 'react'
 
 interface Props{
-    type:'SELL'|'FEATURE'
+    type?:'SELL'|'FEATURE'
     images:string[]
 }
 
