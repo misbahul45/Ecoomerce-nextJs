@@ -1,7 +1,7 @@
 'use server'
 
 import prisma from "@/lib/prisma"
-import { CreateProductSchema } from "@/schema/product.schema"
+import { CartOnProductSchema, CreateProductSchema } from "@/schema/product.schema"
 import { z } from "zod"
 
 type CreateProduct=z.infer<typeof CreateProductSchema>
@@ -34,4 +34,43 @@ export const createNewProducts=async(product:CreateProduct)=>{
         return { succes:false, message:'Something went wrong' }
     }
 
+}
+
+
+interface CartOnProduct{
+    productId:string
+    quantity:number
+    size?:string
+    color?:string,
+    userId:string
+}
+
+export const addProductsTocart=async(cartOnProduct:CartOnProduct)=>{
+    const validation=CartOnProductSchema.safeParse(cartOnProduct)
+    if(!validation.success){
+        return { succes:false, message:validation.error.errors[0].message }
+    }
+
+    try {
+        const cart=await prisma.cart.findFirst({
+            where:{
+                userId:cartOnProduct.userId
+            }
+        })
+        if(cart?.id){
+            const { userId,...value } = cartOnProduct;
+            await prisma.cartOnProduct.create({
+                data:{
+                    ...value,
+                    cartId:cart?.id 
+                }
+            })
+                return { success: true, message: 'Product added to cart successfully' };
+        }
+        return { succes:false, message:'Something went wrong' }
+
+    } catch (error) {
+        console.log(error)
+        return { succes:false, message:'Something went wrong' }
+    }
 }

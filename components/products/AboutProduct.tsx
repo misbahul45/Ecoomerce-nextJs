@@ -2,13 +2,15 @@
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { useToast } from '../ui/use-toast';
+import { addProductsTocart } from '@/actions/products.actions';
 
 interface Props {
   product: Product;
   categoryProduct: Category;
+  user:User | null;
 }
 
-const AboutProduct = ({ product, categoryProduct }: Props) => {
+const AboutProduct = ({ product, categoryProduct, user }: Props) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [selectColor, setSelectColor] = useState<string>(''); 
   const [selectSize, setSelectSize] = useState<string>('');
@@ -30,25 +32,65 @@ const AboutProduct = ({ product, categoryProduct }: Props) => {
     }
   };
 
-  const handleBuyProduct = () => {
-    if(product.size && (product.size?.length>0)){
-      if(!selectColor && !selectSize){
-        toast({
-          title: 'Error',
-          description: !selectColor?'Please select color':'Please select size',
-          variant: 'destructive',
-        })
+  const validateSelections = () => {
+    if(!selectColor && !selectSize && product.size.length>0 && product.colors.length>0){
+      return 'Please select color and size'
+    }
+    if(product.size.length>0 || product.colors.length>0){
+      if (!selectColor) {
+        return 'Please select color';
+      }
+      if (product.size?.length > 0 && !selectSize) {
+        return 'Please select size';
       }
     }
-    if(!selectColor){
+    return null;
+  };
+  
+  const handleBuyProduct = () => {
+    const error = validateSelections();
+    if (error) {
       toast({
         title: 'Error',
-        description: !selectColor?'Please select color':'Please select size',
+        description: error,
         variant: 'destructive',
-      })
+      });
+      return;
     }
-
-  }
+  };
+  
+  const handleToCart = async() => {
+    const error = validateSelections();
+    if (error) {
+      toast({
+        title: 'Error',
+        description: error,
+        variant: 'destructive',
+      });
+      return;
+    }
+    const message=await addProductsTocart({
+      productId:product.id,
+      quantity:quantity,
+      ...(selectColor && {color:selectColor}),
+      ...(selectSize && {size:selectSize}),
+      userId:user?.id || ''
+    })
+    if(message.success){
+      toast({
+        title: 'Success',
+        description: message.message,
+        variant: 'default',
+      });
+    }else{
+      toast({
+        title: 'Error',
+        description: message.message,
+        variant: 'destructive',
+      });
+    }
+  };
+  
 
   return (
     <div className="space-y-2">
@@ -108,7 +150,7 @@ const AboutProduct = ({ product, categoryProduct }: Props) => {
           <p className='text-xl text-gray-700 font-bold my-4'>Total: {(product.price * quantity).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</p>
           <div className="space-y-2 mt-2 w-[80%]">
             <Button onClick={handleBuyProduct} className="w-full bg-blue-600 hover:bg-blue-800 font-semibold">Buy Now</Button>
-            <Button className="w-full bg-violet-600 hover:bg-violet-700 font-semibold">Add to cart</Button>
+            <Button onClick={handleToCart} className="w-full bg-violet-600 hover:bg-violet-700 font-semibold">Add to cart</Button>
           </div>
         </div>
       </div>

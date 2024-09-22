@@ -4,12 +4,8 @@ import { notFound } from 'next/navigation'
 import React from 'react'
 import AboutProduct from '@/components/products/AboutProduct'
 import ProductDescription from '@/components/products/ProductDescription'
+import { auth } from '@/lib/auth'
 
-const intialState={
-  quantity:1,
-  color:'',
-  size:''
-}
 
 export async function generateMetadata({ params: { slug } }: Props) {
   const product=await prisma.product.findUnique({
@@ -31,8 +27,13 @@ interface Props {
 } 
 
 
-
 const page = async({ params: { slug } }: Props) => {
+  const session=await auth()
+  const user=session?await prisma.user.findUnique({
+    where:{
+      email:session?.user?.email as string
+    }
+  }) as User : null
   const product=await prisma.product.findUnique({
     where:{
       slug
@@ -51,7 +52,7 @@ const page = async({ params: { slug } }: Props) => {
     <section className='w-full pb-8 pt-2 px-4'>
       <div className='flex lg:flex-row flex-col gap-6 my-4'>
         <ProductImages images={product?.images as string[]} />
-        <AboutProduct product={product} categoryProduct={categoryProduct} />
+        <AboutProduct product={product} categoryProduct={categoryProduct} user={user?user:null} />
       </div>
       <br />
       <p className='text-2xl font-bold text-slate-800 mb-2'>Describe Product</p>

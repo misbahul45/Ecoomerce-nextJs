@@ -16,3 +16,11 @@ export const CreateProductSchema=z.object({
     categoryId:z.string().min(3,{message:'category must be at least 3 characters'}),
     type:z.string().min(3).refine((value)=>value==='FEATURE' || value==='SELL','type must be products')
 })
+
+export const CartOnProductSchema=z.object({
+    productId:z.string(),
+    quantity:z.number(),
+    size:z.string().optional(),
+    color:z.string().optional(),
+    userId:z.string()
+})

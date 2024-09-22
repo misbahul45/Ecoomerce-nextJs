@@ -1,10 +1,11 @@
 import React from 'react'
 
+
 const page = () => {
   return (
-    <div>
-      
-    </div>
+    <section>
+      <div className="flex gap-4"></div>
+    </section>
   )
 }
 

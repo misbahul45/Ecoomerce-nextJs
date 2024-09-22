@@ -2,9 +2,7 @@ import CarouselPoster from '@/components/home/CarouselPoster'
 import Products from '@/components/home/Products'
 import PostProduct from '@/components/ui/PostProduct'
 import prisma from '@/lib/prisma'
-import Link from 'next/link'
 import React from 'react'
-import { FaArrowTrendUp } from "react-icons/fa6";
 
 const page = async() => {
   const allPoster=await prisma.poster.findMany({})
@@ -12,7 +10,6 @@ const page = async() => {
       where:{
           type:'FEATURE'
       },
-      take:10
   }) as Product[]
 
   const sellProducts=await prisma.product.findMany({

@@ -27,9 +27,9 @@ interface Product {
     brand?: string;
     material?: string;
     style?: string;
-    size?: string[];
+    size: string[];
     model?: string;
-    colors?: string[];
+    colors: string[];
     location?: string;
     type?: string;
     categoryId: ObjectId;
