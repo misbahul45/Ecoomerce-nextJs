@@ -3,10 +3,11 @@ import Image from 'next/image'
 import React from 'react'
 
 interface Props{
+    type:'SELL'|'FEATURE'
     images:string[]
 }
 
-const ProductImages = ({images}:Props) => {
+const ProductImages = ({ images, type }:Props) => {
   const [indexImage, setIndexImage]=React.useState(Math.floor(Math.random() *images.length))
   const [animateLeft, setAnimateLeft]=React.useState(false)
   React.useEffect(() => {
@@ -21,8 +22,8 @@ const ProductImages = ({images}:Props) => {
 
   return (
     <div className='space-y-5'>
-      <div className='lg:h-[70vh] md:h-[50vh] lg:w-[50vw] h-[40vh] overflow-hidden'>
-        <Image src={images[indexImage]} alt={images[indexImage]} width={500} height={500} className={`flex-1 lg:h-[70vh] md:h-[50vh] lg:w-[50vw] w-full h-[40vh] object-cover rounded-xl shadow-xl shadow-slate-800/20 ${animateLeft && 'animate-left'}`} />
+      <div className={` ${type==="SELL"?"lg:w-[50vw]":"w-full"} lg:h-[70vh] md:h-[50vh] h-[40vh] rounded-xl`}>
+        <Image src={images[indexImage]} alt={images[indexImage]} width={500} height={500} className={`${type==="SELL"?"lg:w-[50vw]":"w-[100vw]"} flex-1 lg:h-[70vh] md:h-[50vh] h-[40vh] object-cover shadow-xl shadow-slate-800/20 rounded-xl ${animateLeft && 'animate-left'}`} />
       </div>
       <div className="gap-4 flex md:max-h-[70vh] md:max-w-[50vw] w-full overflow-auto no-scrollbar p-2">
         {images.map((image, index) => (

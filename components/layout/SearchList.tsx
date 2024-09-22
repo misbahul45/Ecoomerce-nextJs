@@ -40,7 +40,7 @@ const SearchList = ({ products, categories }: Props) => {
   return (
     <section className={`absolute left-1/2 top-2 -translate-x-1/2 ${showSearch ? 'scale-100' : 'scale-0'} lg:p-4 md:p-2 p-1.5 w-full max-w-4xl h-[80vh] z-30 bg-slate-100/90 backdrop-blur-md shadow-xl shadow-slate-700/20 rounded-lg transition-all duration-100`}>
       <FormSearch />
-      <div className="overflow-auto h-[90%] mt-2 space-y-4">
+      <div className="overflow-y-auto overflow-x-hidden h-[90%] mt-2 space-y-4">
         {loading ? (
           <Loader size='8' color="black" />
         ) : (

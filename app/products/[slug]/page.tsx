@@ -52,7 +52,7 @@ const page = async({ params: { slug } }: Props) => {
     <section className='w-full pb-8 pt-2 px-4'>
       <div className='flex lg:flex-row flex-col gap-6 my-4'>
         <ProductImages images={product?.images as string[]} />
-        <AboutProduct product={product} categoryProduct={categoryProduct} user={user?user:null} />
+        {product?.type==='SELL' && <AboutProduct product={product} categoryProduct={categoryProduct} user={user}/>}
       </div>
       <br />
       <p className='text-2xl font-bold text-slate-800 mb-2'>Describe Product</p>

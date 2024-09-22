@@ -16,33 +16,33 @@ const Footer = () => {
           </div>
           <div className='space-y-4'>
             <h3 className='text-xl font-bold border-b-2 border-blue-400 pb-2 mb-2'>Customer Service</h3>
-            <ul className='space-y-2'>
-              <li>
+            <div className='space-y-2'>
+              <div>
                 <Link href='/contact'>
                   <span className='hover:text-blue-400'>Contact Us</span>
                 </Link>
-              </li>
-              <li>
+              </div>
+              <div>
                 <Link href='/faq'>
                   <span className='hover:text-blue-400'>FAQ</span>
                 </Link>
-              </li>
-              <li>
+              </div>
+              <div>
                 <Link href='/returns'>
                   <span className='hover:text-blue-400'>Returns & Exchanges</span>
                 </Link>
-              </li>
-              <li>
+              </div>
+              <div>
                 <Link href='/privacy-policy'>
                   <span className='hover:text-blue-400'>Privacy Policy</span>
                 </Link>
-              </li>
-              <li>
+              </div>
+              <div>
                 <Link href='/terms'>
                   <span className='hover:text-blue-400'>Terms of Service</span>
                 </Link>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
           <div className='space-y-4'>
             <h3 className='text-xl font-bold border-b-2 border-blue-400 pb-2 mb-2'>Follow Us</h3>

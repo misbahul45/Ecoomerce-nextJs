@@ -94,20 +94,20 @@ const AboutProduct = ({ product, categoryProduct, user }: Props) => {
 
   return (
     <div className="space-y-2">
-      <h1 className="text-lg text-slate-600">{product.name}</h1>
+      <h1 className="md:text-lg text-[17px] text-slate-600">{product.name}</h1>
       <div>
         <p>
           <span className='font-semibold'>{product.purchesed}</span>
           <span className="ml-2 text-gray-300">purchased</span>
         </p>
-        <p className="font-semibold text-2xl">
+        <p className="font-semibold md:text-2xl text-xl">
           {product.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
         </p>
-        <p className="text-gray-500 text-[18px] capitalize">category : <span className="font-semibold">{categoryProduct.category}</span></p>
-        <p className="text-gray-500 text-[18px] capitalize">
+        <p className="text-gray-500 md:text-[18px] capitalize text-[15px]">category : <span className="font-semibold">{categoryProduct.category}</span></p>
+        <p className="text-gray-500 md:text-[18px] capitalize text-[15px]">
           stock: <span className="font-semibold">{(product.stock - product.purchesed)}</span>
         </p>
-        <p className="text-gray-500 text-[18px] capitalize">brand: <span className="font-semibold">{product.brand}</span></p>
+        <p className="text-gray-500 md:text-[18px] capitalize text-[15px]">brand: <span className="font-semibold">{product.brand}</span></p>
 
         <p className="text-gray-500 capitalize text-[16px] mt-2">Product Colors</p>
         <div className="flex flex-wrap">

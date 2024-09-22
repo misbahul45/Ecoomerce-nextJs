@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma"
 import { CartOnProductSchema, CreateProductSchema } from "@/schema/product.schema"
+import { revalidatePath } from "next/cache"
 import { z } from "zod"
 
 type CreateProduct=z.infer<typeof CreateProductSchema>
@@ -73,4 +74,19 @@ export const addProductsTocart=async(cartOnProduct:CartOnProduct)=>{
         console.log(error)
         return { succes:false, message:'Something went wrong' }
     }
+}
+
+export const updateCartProduct=async(cartId:string,productId:string, quantity:number)=>{
+    await prisma.cartOnProduct.update({
+        where:{
+            cartId_productId:{
+                productId,
+                cartId
+            }
+        },
+        data:{
+            quantity
+        }
+    })
+    revalidatePath('/cart')
 }
