@@ -38,9 +38,9 @@ const CartProduct: React.FC<CartProductProps> = ({ cartOnProduct }) => {
       },[quantity])
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between ">
       <div className="flex gap-4">
-        <input type="checkbox" className="size-6 cursor-pointer" />
+        <input type="checkbox" className="cursor-pointer" />
         <Image
           src={cartOnProduct.product.images[0]}
           alt={cartOnProduct.product.name}
