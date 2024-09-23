@@ -21,7 +21,7 @@ const CartProduct: React.FC<CartProductProps> = ({ cartOnProduct }) => {
       };
     
       const decreaseQuantity = () => {
-        setQuantity((prev) => (prev > 1 ? prev - 1 : 1)); // Prevent decreasing below 1
+        setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
       };
     
       const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,13 +32,13 @@ const CartProduct: React.FC<CartProductProps> = ({ cartOnProduct }) => {
       };
       const updateProduct=async(cartId:string,productId:string, quantity:number)=>{
         await updateCartProduct(cartId, productId, quantity)
-    }
+      }
       React.useEffect(()=>{
         updateProduct(cartOnProduct.cartId, cartOnProduct.product.id, quantity)
       },[quantity])
 
   return (
-    <div className="flex justify-between ">
+    <div className="w-full flex justify-between md:flex-row flex-col">
       <div className="flex gap-4">
         <input type="checkbox" className="cursor-pointer" />
         <Image
@@ -46,20 +46,20 @@ const CartProduct: React.FC<CartProductProps> = ({ cartOnProduct }) => {
           alt={cartOnProduct.product.name}
           width={100}
           height={100}
-          className="size-36 object-cover rounded-xl"
+          className="lg:size-36 md:size-28 size-16 object-cover lg:rounded-xl rounded-lg"
         />
         <div>
-          <p className="mb-1 font-semibold">{cartOnProduct.product.name}</p>
-          <button className="block px-2 py-1.5 rounded-md text-sm bg-slate-200 mb-1">
+          <p className="mb-1 font-semibold text-[10px] md:text-lg">{cartOnProduct.product.name}</p>
+          <button className="block px-2 py-1.5 rounded-md md:text-sm text-[8px] bg-slate-200 mb-1">
             {cartOnProduct.product.location}
           </button>
           {cartOnProduct.size && (
-            <button className="block px-2 py-1.5 rounded-md text-sm bg-slate-200 mb-1">
+            <button className="block px-2 py-1.5 rounded-md md:text-sm text-[8px] bg-slate-200 mb-1">
               {cartOnProduct.size}
             </button>
           )}
           {cartOnProduct.color && (
-            <button className="block px-2 py-1.5 rounded-md text-sm bg-slate-200 mb-1">
+            <button className="block px-2 py-1.5 rounded-md md:text-sm text-[8px] bg-slate-200 mb-1">
               {cartOnProduct.color}
             </button>
           )}
@@ -76,7 +76,7 @@ const CartProduct: React.FC<CartProductProps> = ({ cartOnProduct }) => {
         </p>
         <div className="flex flex-col justify-center items-center">
           <div className="flex gap-3 items-center">
-            <Button disabled={quantity >= cartOnProduct.product.stock} className="rounded-full font-bold" onClick={increaseQuantity}>
+            <Button disabled={quantity >= cartOnProduct.product.stock} className="rounded-full font-bold " onClick={increaseQuantity}>
                 +
             </Button>
             <input

@@ -1,16 +1,25 @@
 'use client'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 interface Props{
     cartOnProducts:any
+    total:number
 }
 
-const Information = ({cartOnProducts}:Props) => {
-    console.log(cartOnProducts)
+const Information = ({cartOnProducts, total}:Props) => {
+    const totalProduct=useMemo(()=>{
+      return cartOnProducts.reduce((prev:any,curr:any)=>prev+curr.quantity,0) 
+    },[cartOnProducts])
+
   return (
-    <div className='w-full py-3 px-4 flex gap-4 rounded-t-xl bg-slate-100 font-semibold'>
-      <input type="checkbox" className='size-4 cursor-pointer' />
-      <h2>All Products ({cartOnProducts.length})</h2>
+    <div className='w-full py-3 px-4 flex justify-between rounded-t-xl bg-slate-100 font-semibold'>
+      <div className='flex gap-4'>
+        <input type="checkbox" className='size-4 cursor-pointer' />
+        <h2>All Products ({totalProduct})</h2>
+      </div>
+      <div>
+        <h2>Total : {total.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</h2>
+      </div>
     </div>
   )
 }

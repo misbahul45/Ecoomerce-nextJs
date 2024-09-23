@@ -71,8 +71,7 @@ export const addProductsTocart=async(cartOnProduct:CartOnProduct)=>{
         return { succes:false, message:'Something went wrong' }
 
     } catch (error) {
-        console.log(error)
-        return { succes:false, message:'Something went wrong' }
+        return { succes:false, message:'Product already in cart' }
     }
 }
 
