@@ -15,3 +15,10 @@ export const LOGIN_IMG=[
     '/img-sign-in/img-14.avif',
     '/img-sign-in/img-15.avif',
 ]
+
+
+export const CHECKOUT_NAV=[
+    'address',
+    'payment',
+    'order',
+]

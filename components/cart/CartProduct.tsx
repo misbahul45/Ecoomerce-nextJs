@@ -1,27 +1,33 @@
 import React from 'react';
 import Image from 'next/image';
 import { Button } from '../ui/button';
-import { updateCartProduct } from '@/actions/products.actions';
+import { updateCartProduct } from '@/actions/carts.actions';
+import DeleteProduct from './DeleteProduct';
+import { useRouter } from 'next/navigation';
 
 interface CartProductProps {
-  cartOnProduct: {
-    id: string;
-    product: Product;
-    size?: string;
-    color?: string;
-    quantity: number;
-    cartId: string;
-  };
+  cartProduct:CartProduct
+  productChechout: CartProduct[];
+  setProductCheckout: React.Dispatch<React.SetStateAction<CartProduct[]>>;
 }
 
-const CartProduct: React.FC<CartProductProps> = ({ cartOnProduct }) => {
-    const [quantity, setQuantity] = React.useState(cartOnProduct.quantity);
+const CartProduct: React.FC<CartProductProps> = ({ cartProduct, productChechout, setProductCheckout  }) => {
+    const [quantity, setQuantity] = React.useState(cartProduct.quantity);
+    const router=useRouter()
+
+    const isCheckout=React.useMemo(()=>{
+      return productChechout.some((product)=>product.id===cartProduct.id)   
+    },[productChechout])
+
+
     const increaseQuantity = () => {
         setQuantity((prev) => prev + 1);
+        router.refresh()
       };
     
       const decreaseQuantity = () => {
         setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+        router.refresh
       };
     
       const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,50 +39,58 @@ const CartProduct: React.FC<CartProductProps> = ({ cartOnProduct }) => {
       const updateProduct=async(cartId:string,productId:string, quantity:number)=>{
         await updateCartProduct(cartId, productId, quantity)
       }
+
       React.useEffect(()=>{
-        updateProduct(cartOnProduct.cartId, cartOnProduct.product.id, quantity)
+        updateProduct(cartProduct.cartId, cartProduct.product.id, quantity)
+      },[quantity])
+
+      React.useEffect(()=>{
+        setProductCheckout(productChechout.map((product)=>product.id===cartProduct.id?{...product, quantity}:product))  
       },[quantity])
 
   return (
     <div className="w-full flex justify-between md:flex-row flex-col">
       <div className="flex gap-4">
-        <input type="checkbox" className="cursor-pointer" />
+        <input type="checkbox"  checked={isCheckout} onChange={()=>isCheckout?setProductCheckout(productChechout.filter((product)=>product.id!==cartProduct.id)):setProductCheckout([...productChechout, cartProduct])} className="cursor-pointer" />
         <Image
-          src={cartOnProduct.product.images[0]}
-          alt={cartOnProduct.product.name}
+          src={cartProduct.product.images[0]}
+          alt={cartProduct.product.name}
           width={100}
           height={100}
           className="lg:size-36 md:size-28 size-16 object-cover lg:rounded-xl rounded-lg"
         />
         <div>
-          <p className="mb-1 font-semibold text-[10px] md:text-lg">{cartOnProduct.product.name}</p>
+          <p className="mb-1 font-semibold text-[10px] md:text-lg">{cartProduct.product.name}</p>
           <button className="block px-2 py-1.5 rounded-md md:text-sm text-[8px] bg-slate-200 mb-1">
-            {cartOnProduct.product.location}
+            {cartProduct.product.location}
           </button>
-          {cartOnProduct.size && (
+          {cartProduct.size && (
             <button className="block px-2 py-1.5 rounded-md md:text-sm text-[8px] bg-slate-200 mb-1">
-              {cartOnProduct.size}
+              {cartProduct.size}
             </button>
           )}
-          {cartOnProduct.color && (
+          {cartProduct.color && (
             <button className="block px-2 py-1.5 rounded-md md:text-sm text-[8px] bg-slate-200 mb-1">
-              {cartOnProduct.color}
+              {cartProduct.color}
             </button>
           )}
         </div>
       </div>
       <div className='flex flex-col items-center space-y-2'>
-        <p>
-          <span className="font-semibold">
-            {(
-              cartOnProduct.product.price * quantity
-            ).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
-          </span>{' '}
-          <span className="text-sm text-slate-500">x{cartOnProduct.quantity}</span>
-        </p>
+        <div className="flex gap-4">
+          <p>
+            <span className="font-semibold">
+              {(
+                cartProduct.product.price * quantity
+              ).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
+            </span>{' '}
+            <span className="text-sm text-slate-500">x{cartProduct.quantity}</span>
+          </p>
+          <DeleteProduct productId={cartProduct.product.id} cartId={cartProduct.cartId} setProductCheckout={setProductCheckout} />
+        </div>
         <div className="flex flex-col justify-center items-center">
           <div className="flex gap-3 items-center">
-            <Button disabled={quantity >= cartOnProduct.product.stock} className="rounded-full font-bold " onClick={increaseQuantity}>
+            <Button disabled={quantity >= cartProduct.product.stock} className="rounded-full font-bold " onClick={increaseQuantity}>
                 +
             </Button>
             <input

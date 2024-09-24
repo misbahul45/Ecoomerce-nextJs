@@ -26,17 +26,18 @@ const page = async() => {
   })
 
   const cartOnProducts=await prisma.cartOnProduct.findMany({
-    where:{
-      cartId:cart?.id || ''
+    where: {
+      cartId: cart?.id || '',
     },
-    include:{
-      product:true
+    include: {
+      product: true
     }
-  })
+  }) as unknown as CartOnProduct[]
+
 
   return (
-    <section>
-      <ParentCart cartOnProducts={cartOnProducts} />
+    <section className='w-full relative min-h-[calc(100vh-4rem)]'>
+      <ParentCart cartOnProducts={cartOnProducts} userId={user?.id || ''} />
     </section>
   )
 }

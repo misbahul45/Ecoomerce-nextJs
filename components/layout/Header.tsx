@@ -8,15 +8,14 @@ import { FiSearch, FiUser } from "react-icons/fi";
 import { Button } from '../ui/button';
 import SearchButton from './SearchButton';
 import { Context } from './Provider';
-import path from 'path';
-
 
 interface Props{
   data:any
   categories:String[]
+  carts:any
 }
 
-const Header = ({data, categories}:Props) => {
+const Header = ({data, categories, carts}:Props) => {
     const pathName=usePathname()
     const { toggleUserMenu }=React.useContext(Context)
 
@@ -46,8 +45,11 @@ const Header = ({data, categories}:Props) => {
         <>
   `        <div className='flex items-center md:gap-4 gap-1'>
               <SearchButton icon={<FiSearch size={25} />} />
-              <Link href={'/cart'} className='rounded-full p-2 hover:bg-slate-100'>
+              <Link href={'/cart'} className='relative rounded-full p-2 hover:bg-slate-100'>
                 <GrCart size={25} />
+                {carts.length>0 &&(
+                  <span className='p-1 rounded-full text-xs bg-blue-500 text-white absolute -top-1 -right-1'>{carts.reduce((a:any,b:any)=>a+b.quantity,0)}</span>
+                )}
               </Link>
               <Button onClick={toggleUserMenu} variant={'ghost'} className='md:block hidden rounded-full p-2 border-0'>
                 <FiUser size={25} />

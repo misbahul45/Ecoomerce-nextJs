@@ -36,12 +36,22 @@ export default async function RootLayout({
       createdAt:'desc'
     }
   }) as Product[]
+
+  const carts=await prisma.cart.findFirst({
+    where:{
+      userId:user?.id
+    },
+    include:{
+      products:true
+    }
+  })
+
   return (
     <html lang="en">
       <body className={roboto.className}>
         <Provider>
           <SessionProvider session={session}>
-            <Header categories={categories} data={{ user: session?.user || undefined }} />
+            <Header carts={carts?.products} categories={categories} data={{ user: session?.user || undefined }} />
             <main className="w-full max-w-[95%] overflow-hidden mx-auto min-h-[calc(100vh-4rem)] relative bg-garay-100">
               {children}
               <SearchList categories={categoriesData} products={products} />

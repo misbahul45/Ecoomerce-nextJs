@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { useToast } from '../ui/use-toast';
-import { addProductsTocart } from '@/actions/products.actions';
+import { addProductsTocart } from '@/actions/carts.actions';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   product: Product;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const AboutProduct = ({ product, categoryProduct, user }: Props) => {
+  const router=useRouter()
   const [quantity, setQuantity] = useState<number>(1);
   const [selectColor, setSelectColor] = useState<string>(''); 
   const [selectSize, setSelectSize] = useState<string>('');
@@ -82,6 +84,7 @@ const AboutProduct = ({ product, categoryProduct, user }: Props) => {
         description: message.message,
         variant: 'default',
       });
+      router.refresh()
     }else{
       toast({
         title: 'Error',

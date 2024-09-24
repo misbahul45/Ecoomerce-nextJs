@@ -36,3 +36,30 @@ interface Product {
     createdAt: Date;
     updatedAt: Date;
   }
+
+  interface CartOnProduct{
+    id:string
+    productId:string
+    quantity:number
+    size?:string
+    color?:string,
+    userId:string
+}
+
+    interface CartProduct {
+        id: string;
+        product: Product;
+        size?: string;
+        color?: string;
+        quantity: number;
+        cartId: string;
+      };
+
+    interface ProductOnOrder{
+        id: string;
+        product: Product;
+        size?: string;
+        color?: string;
+        quantity: number;
+        orderId?: string;
+    }
