@@ -36,7 +36,7 @@ const ParentCart = ({cartOnProducts, userId}:Props) => {
     setTotal(0)
     setLoading(false)
     if(order){
-      router.push(`/checkout/${order.id}`)
+      router.push(`/checkout/${order.id}/address`)
     }
   }
 

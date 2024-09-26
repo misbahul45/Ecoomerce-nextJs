@@ -17,6 +17,24 @@ export const createProductOrder = async (userId: string, productChechout: any) =
         }
     })
 
-    return order
-   
+    return order   
+}
+
+
+
+export const updateProductOrder = async (orderId: string, value:any) => {
+    try {
+        await prisma.order.update({
+            where: {
+                id: orderId
+            },
+            data: {
+                ...value
+            }
+        })
+        return true
+    } catch (error) {
+        console.log(error)
+        return false
+    }
 }

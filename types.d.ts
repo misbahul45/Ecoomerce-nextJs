@@ -38,7 +38,7 @@ interface Product {
   }
 
   interface CartOnProduct{
-    id:string
+    id?:string
     productId:string
     quantity:number
     size?:string
@@ -47,7 +47,7 @@ interface Product {
 }
 
     interface CartProduct {
-        id: string;
+        id?: string;
         product: Product;
         size?: string;
         color?: string;
