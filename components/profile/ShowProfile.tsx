@@ -69,11 +69,11 @@ const ShowProfile = async() => {
                   <TableCell>{totalPrice(item.products).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</TableCell>
                   <TableCell>{item.status}</TableCell>
                   <TableCell>{item.status==="pending"?
-                    <Link href={`/checkout/${item.id}/address`} className='cursor-pointer'>
+                    <Link href={`/checkout/${item.id}/address`} className='cursor-pointer p-2 rounded-full hover:bg-slate-100'>
                       <Edit />
                     </Link>
                   :
-                  <Link href={`/checkout/${item.id}/order`}>
+                  <Link href={`/checkout/${item.id}/order`} className='curson-pointer p-2 rounded-ful hover:bg-slate-100'>
                     <EyeIcon />
                   </Link>
                   }</TableCell>
