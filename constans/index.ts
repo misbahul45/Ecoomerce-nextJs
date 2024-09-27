@@ -22,3 +22,14 @@ export const CHECKOUT_NAV=[
     'payment',
     'order',
 ]
+
+export const TABLE_ORDER=[
+    "No. Order",
+    "Country",
+    "City",
+    "Address",
+    "Postal",
+    "Total",
+    "Status",
+    "Action",
+]

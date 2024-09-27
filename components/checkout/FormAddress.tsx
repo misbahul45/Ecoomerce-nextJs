@@ -17,9 +17,10 @@ import Loader from '../ui/Loader'
 
 interface Props {
     id:string
+    orderData:Order
 }
 
-const FormAddress = ({ id }:Props) => {
+const FormAddress = ({ id, orderData }:Props) => {
     const router=useRouter()
     const { toast }=useToast()
     const [loading,setLoading]=React.useState(false)
@@ -28,10 +29,10 @@ const FormAddress = ({ id }:Props) => {
         mode: 'onChange',
         resolver: zodResolver(AddressOrderSchema),
         defaultValues: {
-            address: '',
-            city: '',
-            country: '',
-            postal: ''
+            address:orderData.address || '',
+            city:orderData.city || '',
+            country:orderData.country || '',
+            postal:orderData.postal || ''
         }
     })
 

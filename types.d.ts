@@ -62,4 +62,17 @@ interface Product {
         color?: string;
         quantity: number;
         orderId?: string;
+        product:Product
+    }
+
+    interface Order{
+        id: string;
+        userId: string;
+        address: string;
+        city: string;
+        country: string;
+        postal: string;
+        methode: string;
+        status: string;
+        products:ProductOnOrder[]
     }

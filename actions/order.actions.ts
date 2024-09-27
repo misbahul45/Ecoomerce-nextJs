@@ -1,6 +1,7 @@
 'use server'
 
 import prisma from "@/lib/prisma"
+import { revalidatePath } from "next/cache"
 
 export const createProductOrder = async (userId: string, productChechout: any) => {
     const order=await prisma.order.create({
@@ -32,6 +33,7 @@ export const updateProductOrder = async (orderId: string, value:any) => {
                 ...value
             }
         })
+        revalidatePath('/checkout')
         return true
     } catch (error) {
         console.log(error)

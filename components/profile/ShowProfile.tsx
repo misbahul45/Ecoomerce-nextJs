@@ -1,10 +1,42 @@
 import { auth } from '@/lib/auth'
+import prisma from '@/lib/prisma'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import React from 'react'
+
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { TABLE_ORDER } from '@/constans'
+import { Edit, EyeIcon } from 'lucide-react'
+import Link from 'next/link'
+
+export const totalPrice=(products:any)=>{
+  return products.reduce((total:any, product:any) => total + product.quantity * product.product.price, 0)
+}
 
 const ShowProfile = async() => {
     const session=await auth()
     const user=session?.user
+    const orders=await prisma.order.findMany({
+        where: {
+            userId: user?.id
+        },
+        include: {
+            products: {
+                include: {
+                    product: true
+                }
+            }
+        }
+    })
+
   return (
     <div className='w-full h-full flex flex-col justify-center items-center'>
         <h1 className='text-3xl font-bold text-blue-500'>Profile Informations</h1>
@@ -16,7 +48,40 @@ const ShowProfile = async() => {
             <p><span className="font-bold">Name :</span> {user?.name}</p>
             <p><span className="font-bold">Email :</span> {user?.email}</p>
         </div>
-        <h2 className='text-3xl font-bold text-blue-800'>My Order</h2>
+        <div className="w-full">
+          <Table>
+            <TableCaption>My Orders</TableCaption>
+            <TableHeader>
+              <TableRow>
+                {TABLE_ORDER.map((item, index) => (
+                  <TableHead key={index}>{item}</TableHead>
+                ))}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {orders?.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{index+1}</TableCell>
+                  <TableCell>{item.country}</TableCell>
+                  <TableCell>{item.city}</TableCell>
+                  <TableCell>{item.address}</TableCell>
+                  <TableCell>{item.postal}</TableCell>
+                  <TableCell>{totalPrice(item.products).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</TableCell>
+                  <TableCell>{item.status}</TableCell>
+                  <TableCell>{item.status==="pending"?
+                    <Link href={`/checkout/${item.id}/address`} className='cursor-pointer'>
+                      <Edit />
+                    </Link>
+                  :
+                  <Link href={`/checkout/${item.id}/order`}>
+                    <EyeIcon />
+                  </Link>
+                  }</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
     </div>
   )
 }

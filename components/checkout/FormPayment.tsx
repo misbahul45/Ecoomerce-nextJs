@@ -25,10 +25,11 @@ import { useToast } from "../ui/use-toast"
 
 interface Props{
   id:string;
+  methode:'stripe'|'cod'
 }
 
 
-function FormPayment({ id }:Props) {
+function FormPayment({ id, methode }:Props) {
   const [loading, setLoading]=React.useState(false)
 
   const { toast }=useToast()
@@ -38,7 +39,7 @@ function FormPayment({ id }:Props) {
   const form = useForm<z.infer<typeof PaymentSchema>>({
     resolver: zodResolver(PaymentSchema),
     defaultValues:{
-      methode:'cod'
+      methode:methode || 'cod'
     }
   })
 
