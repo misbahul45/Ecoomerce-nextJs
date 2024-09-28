@@ -21,9 +21,7 @@ export const totalPrice=(products:any)=>{
   return products.reduce((total:any, product:any) => total + product.quantity * product.product.price, 0)
 }
 
-const ShowProfile = async() => {
-    const session=await auth()
-    const user=session?.user
+const ShowProfile = async({ user }:{ user:User | null }) => {
     const orders=await prisma.order.findMany({
         where: {
             userId: user?.id
@@ -41,7 +39,7 @@ const ShowProfile = async() => {
     <div className='w-full h-full flex flex-col justify-center items-center'>
         <h1 className='text-3xl font-bold text-blue-500'>Profile Informations</h1>
         <Avatar className='mt-6 shadow-xl shadow-slate-600/20 rounded-full'>
-            <AvatarImage src={user?.image || ''} alt="avatar" className='size-32 rounded-full' />
+            <AvatarImage src={user?.image || ''} alt="avatar" className='size-32 rounded-full object-cover' />
             <AvatarFallback><div className="size-32 rounded-full border-t-4 border-slate-700 animate-spin"></div></AvatarFallback>
         </Avatar>
         <div className="flex gap-4 my-4">
@@ -69,11 +67,11 @@ const ShowProfile = async() => {
                   <TableCell>{totalPrice(item.products).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</TableCell>
                   <TableCell>{item.status}</TableCell>
                   <TableCell>{item.status==="pending"?
-                    <Link href={`/checkout/${item.id}/address`} className='cursor-pointer p-2 rounded-full hover:bg-slate-100'>
+                    <Link href={`/checkout/${item.id}/address`} className='cursor-pointer p-2 rounded-full'>
                       <Edit />
                     </Link>
                   :
-                  <Link href={`/checkout/${item.id}/order`} className='curson-pointer p-2 rounded-ful hover:bg-slate-100'>
+                  <Link href={`/checkout/${item.id}/order`} className='curson-pointer p-2 rounded-full'>
                     <EyeIcon />
                   </Link>
                   }</TableCell>

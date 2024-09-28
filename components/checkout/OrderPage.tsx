@@ -6,8 +6,9 @@ import {
   useElements,
   PaymentElement,
 } from "@stripe/react-stripe-js";
+import { updateProductOrder } from "@/actions/order.actions";
 
-const OrderPage = ({ amount }: { amount: number }) => {
+const OrderPage = ({ amount, orderId }: { amount: number, orderId:string }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -49,7 +50,9 @@ const OrderPage = ({ amount }: { amount: number }) => {
         return_url: `http://www.localhost:3000/payment-success?amount=${amount}`,
       },
     });
-
+    if(!error){
+      await updateProductOrder(orderId,{ status:'paid' })
+    }
     if (error) {
       setErrorMessage(error.message);
     }

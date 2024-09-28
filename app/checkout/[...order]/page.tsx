@@ -11,6 +11,13 @@ interface Props {
   }
 }
 
+export async function generateMetadata({ params: { order } }: Props) {
+  return {
+    title: `${order[1]} - Misbahul's Shop`,
+    description: `${order[1]} for Misbahul's Shop`,
+  }
+}
+
 const Checkout = async({params:{ order }}:Props) => {
   const orderData = await prisma.order.findUnique({
     where: {

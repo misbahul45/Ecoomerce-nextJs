@@ -33,6 +33,23 @@ export const createUsers=async(newUser:Partial<User>)=>{
     }
 }
 
+export const updateUserProfile=async(data:Partial<User>, id:string)=>{
+    try {
+        await prisma.user.update({
+            where:{
+                id
+            },
+            data:{
+                ...data
+            }
+        })
+        return { success:true, message:'Success update profile' }
+    } catch (error) {
+        console.log(error)
+        return { success:false, message:'Invalid update user' }
+    }
+}
+
 export const comparePassword=async(password:string,userPassword:string)=>{
     return await bcrypt.compare(password,userPassword)
 }

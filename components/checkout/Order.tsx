@@ -21,11 +21,9 @@ interface Props{
 
 const Order = ({ orderData }:Props) => {
     const products=orderData.products
-    const { toast }=useToast()
     const amount = React.useMemo(() => {
         return orderData.products.reduce((a, b) => a + (b.quantity * b.product.price), 0)
       }, [orderData])
-
 
 
   return (
@@ -41,7 +39,7 @@ const Order = ({ orderData }:Props) => {
                     currency: "idr",
                 }}
             >
-                <OrderPage amount={amount} />
+                <OrderPage amount={amount} orderId={orderData.id} />
             </Elements>
             :
             <p className='bg-green-200 text-slate-700 px-4 py-2.5 rounded-md my-4'>
@@ -54,7 +52,11 @@ const Order = ({ orderData }:Props) => {
             <div className='flex justify-between'>
                 <div className='space-x-2 flex'>
                     <Image src={product.product.images[0]} alt={product.product.images[0]} width={200} height={200} className='size-32 object-cover rounded-md shadow-md shadow-slate-700/20' />
-                    <h1 className='text-sm'>{product.product.name}</h1>
+                    <div>
+                      <h1 className='text-sm'>{product.product.name}</h1>
+                      <h2 className='text-sm font-semibold'>Quantity : {product.quantity}</h2>
+                      <h2  className='text-sm font-semibold'>Product Price : {product.product.price.toLocaleString('id-ID',{ style:"currency", currency:'IDR' })}</h2>
+                    </div>
                 </div>
             </div>
         ))}

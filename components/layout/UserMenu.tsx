@@ -29,7 +29,7 @@ const UserMenu = ({ user, role }:Props) => {
 
   if(!user) return null
   return (
-    <ul className={`fixed lg:right-8 md:right-4 right-2 top-16 z-50 bg-gray-100 rounded-xl shadow-xl shadow-slate-600/20 border-[1px] border-slate-300 ${showUserMenu?'translate-x-0 opacity-100':'translate-x-[120%] opacity-5'} transition-all duration-100`}>
+    <ul className={`fixed lg:right-8 md:right-4 right-2 top-16 min-w-56 z-50 bg-gray-100 rounded-xl shadow-xl shadow-slate-600/20 border-[1px] border-slate-300 ${showUserMenu?'translate-x-0 opacity-100':'translate-x-[120%] opacity-5'} transition-all duration-100`}>
         <li className='flex gap-2 items-center p-3'>
             <Avatar>
                 <AvatarImage src={user?.image || ''} alt="avatar" className='size-8 rounded-full' />
