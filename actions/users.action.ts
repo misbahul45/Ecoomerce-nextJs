@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt'
 import { signIn } from '@/lib/auth'
 import { AuthError } from 'next-auth'
 import prisma from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
 
 export const createUsers=async(newUser:Partial<User>)=>{
     try {
@@ -43,6 +44,7 @@ export const updateUserProfile=async(data:Partial<User>, id:string)=>{
                 ...data
             }
         })
+        revalidatePath('/profile')
         return { success:true, message:'Success update profile' }
     } catch (error) {
         console.log(error)

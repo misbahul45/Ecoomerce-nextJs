@@ -33,3 +33,5 @@ export const TABLE_ORDER=[
     "Status",
     "Action",
 ]
+
+export const REVIEW_STAR=[1,2,3,4,5]

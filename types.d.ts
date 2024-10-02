@@ -1,21 +1,21 @@
-interface User{
-    id:string
-    name:string
-    email:string
-    image?:string
-    role:'admin'|'user'
-    password?:string
-}
+    interface User{
+        id:string
+        name:string
+        email:string
+        image?:string
+        role:'admin'|'user'
+        password?:string
+    }
 
-interface Category{
-    id:string
-    category:string
-    createdAt:Date
-    updatedAt:Date
-}
+    interface Category{
+        id:string
+        category:string
+        createdAt:Date
+        updatedAt:Date
+    }
 
 
-interface Product {
+  interface Product {
     id: string;
     name: string;
     slug: string;
@@ -30,6 +30,7 @@ interface Product {
     size: string[];
     model?: string;
     colors: string[];
+    comments: Comment[];
     location?: string;
     type?: string;
     categoryId: ObjectId;
@@ -76,3 +77,26 @@ interface Product {
         status: string;
         products:ProductOnOrder[]
     }
+
+    interface Rating {
+        id: string;
+        commentId: string;
+        comment?: Comment | null;
+        rating: number;
+      
+        createdAt: Date;
+        updatedAt: Date;
+      }
+      
+
+    interface Comment{
+        id: string;
+        content: string;
+        createdAt: Date;
+        updatedAt: Date;
+        author?: User | null;
+        authorId?: string | null;
+        product?: Product | null;
+        productId: string;
+        rating:Rating
+      };

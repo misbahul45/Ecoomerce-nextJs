@@ -36,11 +36,19 @@ const page = async({ params: { slug } }: Props) => {
       email:session?.user?.email as string
     }
   }) as User : null
-  const product=await prisma.product.findUnique({
-    where:{
+  const product = (await prisma.product.findUnique({
+    where: {
       slug
+    },
+    include: {
+      comments: {
+        include: {
+          author: true,
+          rating: true
+        }
+      }
     }
-  }) as Product
+  })) as unknown as Product
 
   const categoryProduct=await prisma.category.findUnique({
     where:{
@@ -74,7 +82,7 @@ const page = async({ params: { slug } }: Props) => {
               <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} price={product.price} />
           ))}
       </Products>
-      <FormReview />
+      <FormReview productId={product.id} authorId={user?.id || null} comments={product?.comments} />
     </section>
   )
 }

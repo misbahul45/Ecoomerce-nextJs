@@ -55,7 +55,7 @@ export default async function RootLayout({
             <main className="w-full max-w-[95%] overflow-hidden mx-auto min-h-[calc(100vh-4rem)] relative bg-garay-100">
               {children}
               <SearchList categories={categoriesData} products={products} />
-              <UserMenu role={(user?.role as 'admin' | 'user') ||'user'} user={session?.user as User || undefined} />
+              <UserMenu role={(user?.role as 'admin' | 'user') ||'user'} user={user as User || undefined} />
             </main>
             <Toaster />
             <Footer />

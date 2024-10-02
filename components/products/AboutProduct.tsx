@@ -49,19 +49,12 @@ const AboutProduct = ({ product, categoryProduct, user }: Props) => {
     return null;
   };
   
-  const handleBuyProduct = () => {
-    const error = validateSelections();
-    if (error) {
-      toast({
-        title: 'Error',
-        description: error,
-        variant: 'destructive',
-      });
-      return;
-    }
-  };
   
   const handleToCart = async() => {
+    if(!user?.id){
+      router.push('/sign-in')
+      return
+    }
     const error = validateSelections();
     if (error) {
       toast({
@@ -152,7 +145,6 @@ const AboutProduct = ({ product, categoryProduct, user }: Props) => {
           </div>
           <p className='text-xl text-gray-700 font-bold my-4'>Total: {(product.price * quantity).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</p>
           <div className="space-y-2 mt-2 w-[80%]">
-            <Button onClick={handleBuyProduct} className="w-full bg-blue-600 hover:bg-blue-800 font-semibold">Buy Now</Button>
             <Button onClick={handleToCart} className="w-full bg-violet-600 hover:bg-violet-700 font-semibold">Add to cart</Button>
           </div>
         </div>
