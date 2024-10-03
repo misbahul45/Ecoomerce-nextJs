@@ -34,6 +34,25 @@ export const createNewProducts=async(product:CreateProduct)=>{
     } catch (error) {
         return { succes:false, message:'Something went wrong' }
     }
-
 }
+
+export const getProducts = async (productName?: string) => {
+    try {
+      const products = await prisma.product.findMany({
+        orderBy: {
+          createdAt: 'desc'
+        },
+        take: 10,
+        where: {
+          name: {
+            contains: productName || '',
+            mode: 'insensitive'
+          }
+        }
+      })
+      return products
+    } catch (error) {
+      return []
+    }
+  }
 

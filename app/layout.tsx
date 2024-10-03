@@ -31,12 +31,6 @@ export default async function RootLayout({
   const categoriesData=await prisma.category.findMany({})
   const categories=categoriesData?.map((category)=>category.category)
 
-  const products=await prisma.product.findMany({
-    orderBy:{
-      createdAt:'desc'
-    }
-  }) as Product[]
-
   const carts=await prisma.cart.findFirst({
     where:{
       userId:user?.id
@@ -54,7 +48,7 @@ export default async function RootLayout({
             <Header carts={carts?.products} categories={categories} data={{ user: session?.user || undefined }} />
             <main className="w-full max-w-[95%] overflow-hidden mx-auto min-h-[calc(100vh-4rem)] relative bg-garay-100">
               {children}
-              <SearchList categories={categoriesData} products={products} />
+              <SearchList categories={categoriesData} />
               <UserMenu role={(user?.role as 'admin' | 'user') ||'user'} user={user as User || undefined} />
             </main>
             <Toaster />

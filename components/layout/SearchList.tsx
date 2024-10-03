@@ -1,31 +1,29 @@
 'use client'
-import React from "react"
+import React, { useMemo } from "react"
 import { Context } from "./Provider"
 import FormSearch from "./FormSearch"
 import ProductList from "./ProductList"
 import { sleep } from "../create-post/FormProducts"
 import Loader from "../ui/Loader"
+import { getProducts } from "@/actions/products.actions"
 
 interface Props {
-  products: Product[],
   categories: Category[]
 }
 
-const SearchList = ({ products, categories }: Props) => {
+const SearchList = ({ categories }: Props) => {
   const { showSearch, search, toggleSearch } = React.useContext(Context)
   const [loading, setLoading] = React.useState(false)
-
-  const productsShow = React.useMemo(() => {
-    return products.filter((product) =>
-      product.name.toLowerCase().includes(search.toLowerCase())
-    );
-  }, [search, products]);
+  const [productsShow, setProductsShow] = React.useState<Product[]>([])
 
   React.useEffect(() => {
-    if (search) {
-      setLoading(true);
-      sleep(1000).then(() => setLoading(false));
+    const getShowProucts = async () => {
+      setLoading(true)
+      const products = await getProducts(search)
+      setProductsShow(products as Product[])
+      setLoading(false)
     }
+    getShowProucts()
   }, [search]);
 
   React.useEffect(() => {

@@ -33,7 +33,6 @@ const FormReview = ({ productId, authorId, comments }:Props) => {
   const [loading,  setLoading]=React.useState(false)
   const { toast }=useToast()
 
-
   const form=useForm({
     resolver:zodResolver(FORM_SCHEMA),
     defaultValues:{
@@ -43,7 +42,7 @@ const FormReview = ({ productId, authorId, comments }:Props) => {
   })
   
   const onSubmit=async(value:z.infer<typeof FORM_SCHEMA>)=>{
-    if(!data?.user?.id){
+    if(!data?.user?.email){
       router.push('/sign-in')
       return;
     }
@@ -60,7 +59,9 @@ const FormReview = ({ productId, authorId, comments }:Props) => {
         description:"User already reviewed",
         variant:'destructive'
       })
+      return;
     }
+    form.reset()
     setLoading(false)
   }
 
