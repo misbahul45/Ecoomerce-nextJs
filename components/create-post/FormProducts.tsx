@@ -242,7 +242,7 @@ const FormProducts = ({ categories }:Props) => {
           />
         </label>
         <SelectProductType dispatch={dispatch} value={state.type} />
-        <Button type='submit' className='w-full'>
+        <Button type='submit' disabled={loading} className='w-full'>
           {loading?
             <div className='flex items-center gap-2'>
               <p>Creating Product</p>

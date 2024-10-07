@@ -16,7 +16,7 @@ const AuthButton = ({message, type, loading}:Props) => {
     const { toast }=useToast()
     const router=useRouter()
     useEffect(() => {
-        if(message){
+        if(message === 'Success' || message.includes('Success')){
             toast({
                 ...((message.includes('Failed') || message.includes('exists')) && { variant:'destructive' }),
                 ...((message.includes('Failed')|| message.includes('exists')) && { action: <ToastAction altText="Try again">Try again</ToastAction> }),

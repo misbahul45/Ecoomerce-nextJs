@@ -95,7 +95,7 @@ function FormPayment({ id, methode }:Props) {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full flex justify-center gap-3">
+          <Button type="submit" disabled={loading} className="w-full flex justify-center gap-3">
             {loading?
             <>
               <span>Loading...</span>

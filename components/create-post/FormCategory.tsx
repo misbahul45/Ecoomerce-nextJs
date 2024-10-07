@@ -9,6 +9,8 @@ import { Button } from '../ui/button'
 import { createNewCategory } from '@/actions/category.actions'
 import { useRouter } from 'next/navigation'
 import { useToast } from '../ui/use-toast'
+import { sleep } from './FormProducts'
+import Loader from '../ui/Loader'
 
 const CategorySchema=z.object({
     category:z.string().min(3,{ message:'Category at least 3 character' })
@@ -29,6 +31,7 @@ const FormCategory = () => {
     })
 
     const onSubmit = async (values: TypeCategory) => {
+        await sleep()
         const data = await createNewCategory(values.category);
         if (data !== undefined) {
             toast({
@@ -60,7 +63,14 @@ const FormCategory = () => {
                     </FormItem>
                 )}
                 />
-                <Button type="submit">Create Category</Button>
+                <Button type="submit" disabled className='w-full flex justify-center items-center'>
+                    {form.formState.isSubmitting ? 
+                    <>
+                        <Loader size="4" color='white' />
+                        <span className='ml-2'>Submitting...</span>
+                    </>
+                    : 'Submit'}
+                </Button>
             </form>
         </Form>
     </>

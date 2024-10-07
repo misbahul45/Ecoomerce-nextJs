@@ -108,7 +108,7 @@ const FormProfile = ({ user }:{ user:User | null }) => {
             </FormItem>
           )}
         />
-        <Button variant={'default'} type='submit' className='w-full flex items-center gap-2'>
+        <Button variant={'default'} disabled={loading} type='submit' className='w-full flex items-center gap-2'>
           {loading?
             <>
               <span>Looading...</span>
