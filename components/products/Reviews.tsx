@@ -6,7 +6,7 @@ interface Props{
 }
 
 const Reviews = ({ comments }:Props) => {
-  console.log(comments)
+
   return (
     <div className='space-y-2 border-2 border-slate-300 rounded-lg'>
       {comments.map((comment)=>(

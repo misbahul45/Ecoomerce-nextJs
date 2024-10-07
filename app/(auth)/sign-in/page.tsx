@@ -9,8 +9,8 @@ const page = () => {
   return (
     <section className='w-full min-h-[calc(100vh-4rem)] flex lg:flex-row flex-col justify-center items-center rounded-xl'>
       <div className='w-full max-w-sm lg:py-0 py-8 flex flex-col justify-center px-4'>
-        <h1 className='text-3xl font-bold mb-2'>Login To Misbahul's Shop</h1>
-        <p className='mb-3'>New to Misbahul's Shop? <Link href={'/sign-up'} className='text-blue-500'>Create an account</Link></p>
+        <h1 className='text-3xl font-bold mb-2'>Login To Misbahul&lsquo;s Shop</h1>
+        <p className='mb-3'>New to Misbahul&lsquo;s Shop? <Link href={'/sign-up'} className='text-blue-500'>Create an account</Link></p>
         <FormSignIn />
       </div>
       <div className={`w-full grid grid-cols-auto-fill px-2 rounded shadow-inner gap-4 `}>

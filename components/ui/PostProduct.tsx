@@ -24,7 +24,7 @@ const PostProduct = ({ name, images, slug, price }: Props) => {
 
   return (
     <Link href={`/products/${slug}`} className='w-full px-3 py-2 rounded-xl shadow-md shadow-slate-600/10 border-2 hover:shadow-slate-600/40 transition-all duration-100 group'>
-      <div className='lg:w-64 h-48 w-full'>
+      <div className='lg:w-60 h-48 w-full relative'>
         <Avatar className='shadow-xl shadow-slate-600/20 w-full h-full rounded-md'>
           <AvatarImage
             src={images[indexImage]}
@@ -34,7 +34,7 @@ const PostProduct = ({ name, images, slug, price }: Props) => {
             className={`w-full h-full object-cover shadow-xl shadow-slate-500/30 group-hover:scale-105 transition-all duration-100`} 
           />
           <AvatarFallback className='rounded-md'>
-            <div className="w-full h-full bg-gradient-to-r from-slate-200 to-gray-400 animated-background"></div>
+            <div className="w-full h-full bg-gradient-to-r from-slate-200 via-slate-600 to-gray-400 animated-background"></div>
           </AvatarFallback>
         </Avatar>
       </div>

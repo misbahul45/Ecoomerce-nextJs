@@ -5,9 +5,12 @@ import { revalidatePath } from "next/cache"
 
 export const createComment=async(newComment:any)=>{
     try{
-        const isComment=await prisma.comment.findFirst({
+        const isComment=await prisma.comment.findUnique({
             where:{
+             productId_authorId:{
+                productId:newComment.productId,
                 authorId:newComment.authorId
+             }   
             }
         })
         if(isComment){

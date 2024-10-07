@@ -45,6 +45,11 @@ const page = async({ params: { slug } }: Props) => {
         include: {
           author: true,
           rating: true
+        },
+        orderBy:{
+          rating:{
+            rating: 'desc'
+          }
         }
       }
     }

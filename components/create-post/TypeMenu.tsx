@@ -21,7 +21,9 @@ const TypeMenu = ({ routerType }:Props) => {
   const router=useRouter()
   
   React.useEffect(() => {
-    router.push(`/create-post/${type.toLowerCase()}`)
+    if(type){
+      router.push(`/create-post/${type.toLowerCase()}`)
+    }
   }, [type])
    
 

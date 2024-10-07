@@ -49,7 +49,7 @@ const Order = ({ orderData }:Props) => {
       </div>
       <div className='w-full max-w-3xl mx-auto'>
         {products.map((product)=>(
-            <div className='flex justify-between'>
+            <div key={product.id} className='flex justify-between'>
                 <div className='space-x-2 flex'>
                     <Image src={product.product.images[0]} alt={product.product.images[0]} width={200} height={200} className='size-32 object-cover rounded-md shadow-md shadow-slate-700/20' />
                     <div>
