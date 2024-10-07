@@ -44,7 +44,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <Provider>
-          <SessionProvider session={session}>
+          <SessionProvider session={session} basePath="/api/auth">
             <Header carts={carts?.products} categories={categories} data={{ user: session?.user || undefined }} />
             <main className="w-full max-w-[95%] overflow-hidden mx-auto min-h-[calc(100vh-4rem)] relative bg-garay-100">
               {children}
