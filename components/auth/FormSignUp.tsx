@@ -18,11 +18,15 @@ import { LuEye, LuEyeOff } from 'react-icons/lu'
 import { createUsers } from '@/actions/users.action'
 import AuthButton from './AuthButton'
 import { SignUpSchema } from '@/schema/auth.schema'
+import { sleep } from '../create-post/FormProducts'
 
 
 const FormSignUp = () => {
     const [showPassword,setShowPassword]=React.useState(false)
     const [successMessage,setSuccessMessage]=React.useState('')
+
+    const [loading, setLoading]=React.useState(false) 
+
     const form=useForm<z.infer<typeof SignUpSchema>>({
         mode:'onChange',
         resolver:zodResolver(SignUpSchema),
@@ -34,8 +38,11 @@ const FormSignUp = () => {
     })
 
     const onSubmit=async(data:z.infer<typeof SignUpSchema>)=>{
+        setLoading(true)
+        await sleep()
         const message=await createUsers(data)
         setSuccessMessage(message)
+        setLoading(false)
     }
   return (
     <div className='w-full px-4'>
@@ -85,7 +92,7 @@ const FormSignUp = () => {
                 </FormItem>
                 )}
                 />
-                <AuthButton type='Create an account' message={successMessage} />
+                <AuthButton type='Create an account' message={successMessage} loading={loading} />
             </form>
         </Form>
     </div>

@@ -37,6 +37,7 @@ const FormSignIn = () => {
     })
 
     const onSubmit=async(data:z.infer<typeof SignInSchema>)=>{
+       await sleep()
        const value:any=await signInUser(data)
        if(value?.error){
         setError(value?.error)
@@ -94,7 +95,7 @@ const FormSignIn = () => {
                 </FormItem>
                 )}
                 />
-                <AuthButton type='sign-in' message='' />
+                <AuthButton type='sign-in' message={`Sign in`} loading={form.formState.isSubmitting} />
             </form>
         </Form>
     </>
