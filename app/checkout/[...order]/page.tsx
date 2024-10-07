@@ -21,16 +21,16 @@ export async function generateMetadata({ params: { order } }: Props) {
 const Checkout = async({params:{ order }}:Props) => {
   const orderData = await prisma.order.findUnique({
     where: {
-        id: order[0]
+      id: order[0]
     },
     include: {
-        products: {
-            include: {
-                product: true
-            }
+      products: {
+        include: {
+          product: true
         }
+      }
     }
-}) as Order;
+  }) as any;
 
 
   const pathName=order[1]

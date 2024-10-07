@@ -87,7 +87,7 @@ const page = async({ params: { slug } }: Props) => {
               <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} price={product.price} />
           ))}
       </Products>
-      <FormReview productId={product.id} authorId={user?.id || null} comments={product?.comments} />
+      <FormReview productId={product.id} authorId={user?.id || null} comments={product?.comments || []} />
     </section>
   )
 }

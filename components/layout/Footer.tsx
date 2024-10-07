@@ -65,7 +65,7 @@ const Footer = () => {
       </div>
       <div className='text-gray-500 pt-2'>
         <div className='container mx-auto px-6 text-center'>
-          <p>&copy; 2024 Misbahul's Shop. All rights reserved.</p>
+          <p>&copy; 2024 Misbahul&lsquo;s Shop. All rights reserved.</p>
         </div>
       </div>
     </footer>

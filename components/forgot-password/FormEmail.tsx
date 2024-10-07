@@ -28,7 +28,7 @@ const FormEmail = () => {
   return (
     <div className='w-full shadow-xl shadow-black/20 px-8 py-6 rounded-lg'>
         <h2 className='text-xl font-semibold text-blue-500/80'>Reset password</h2>
-        <p className='text-slate-500 text-sm mb-4 mt-1'>Enter the email address associated with your account and we'll send you a link to reset your password.</p>
+        <p className='text-slate-500 text-sm mb-4 mt-1'>Enter the email address associated with your account and we&lsquo;ll send you a link to reset your password.</p>
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField

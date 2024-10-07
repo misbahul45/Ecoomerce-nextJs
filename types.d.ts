@@ -30,7 +30,7 @@
     size: string[];
     model?: string;
     colors: string[];
-    comments: Comment[];
+    comments?: Comment[];
     location?: string;
     type?: string;
     categoryId: ObjectId;
