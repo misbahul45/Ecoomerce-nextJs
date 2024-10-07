@@ -38,7 +38,7 @@ const FormSignUp = () => {
         setSuccessMessage(message)
     }
   return (
-    <>
+    <div className='w-full px-4'>
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
                 <FormField
@@ -88,7 +88,7 @@ const FormSignUp = () => {
                 <AuthButton type='Create an account' message={successMessage} />
             </form>
         </Form>
-    </>
+    </div>
   )
 }
 
