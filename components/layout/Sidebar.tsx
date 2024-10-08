@@ -32,7 +32,7 @@ const Sidebar = ({ user, categories }: Props) => {
     }, [showSidebar])
 
     return (
-        <aside className={`space-y-4 fixed px-4 py-2 top-16 left-0 md:hidden h-[calc(100vh-4rem)] bg-slate-100/20 backdrop-blur-md flex flex-col justify-between ${showSidebar ? "sm:w-1/2 w-[70%] opacity-100 z-50" : "w-0 opacity-0 -z-0"} overflow-hidden transition-all duration-200`}>
+        <aside className={`space-y-4 fixed px-4 py-2 top-0 left-0 md:hidden h-[100vh] bg-slate-100/20 backdrop-blur-md flex flex-col justify-between ${showSidebar ? "sm:w-1/2 w-[70%] opacity-100 z-50" : "w-0 opacity-0 -z-0"} overflow-hidden transition-all duration-200`}>
           <div className='space-y-3'>
             {user && (
                 <div className='flex gap-4 items-center justify-center py-1.5 rounded-md bg-slate-100 shadow-xl shadow-slate-800/20'>
