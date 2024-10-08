@@ -77,6 +77,7 @@ export const signInUser=async(data : Partial<User>)=>{
             ...data,
             redirectTo:'/'
         })
+        revalidatePath('/')
         return 'Successfully signed in!'
     } catch (error) {
         if (error instanceof AuthError) {

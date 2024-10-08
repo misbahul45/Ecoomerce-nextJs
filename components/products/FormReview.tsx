@@ -18,19 +18,18 @@ import { useRouter } from 'next/navigation'
 
 const FORM_SCHEMA = z.object({
   content: z.string().min(3, { message: "review cannot empty" }),
-  rating: z.number().min(0)
+  rating: z.number().min(1).max(5, { message: "rating must be between 0 and 5" }),
 })
 
 interface Props{
   productId:string | null
   authorId:string | null
   comments:Comment[]
+  user : User | null
 }
 
-const FormReview = ({ productId, authorId, comments }:Props) => {
-  const { data }=useSession()
+const FormReview = ({ user,productId, authorId, comments }:Props) => {
   const router=useRouter()
-  const [loading,  setLoading]=React.useState(false)
   const { toast }=useToast()
 
   const form=useForm({
@@ -42,11 +41,10 @@ const FormReview = ({ productId, authorId, comments }:Props) => {
   })
   
   const onSubmit=async(value:z.infer<typeof FORM_SCHEMA>)=>{
-    if(!data?.user?.email){
+    if(!user?.email){
       router.push('/sign-in')
       return;
     }
-    setLoading(true)
     await sleep()
     const dataReturn=await createComment({
       ...value,
@@ -62,7 +60,6 @@ const FormReview = ({ productId, authorId, comments }:Props) => {
       return;
     }
     form.reset()
-    setLoading(false)
   }
 
   return (
@@ -97,9 +94,12 @@ const FormReview = ({ productId, authorId, comments }:Props) => {
               </FormItem>
             )}
           />
-          <Button type='submit' disabled={loading} className='w-full mt-4 flex justify-center'>
-            {loading?
-              <Loader size='4' color='white' />
+          <Button type='submit' disabled={form?.formState?.isSubmitting} className='w-full mt-4 flex justify-center'>
+            {form?.formState?.isSubmitting?
+              <>
+               <Loader size='4' color='white' />
+               <span className='ml-2'>reviewing...</span>
+              </>
               :
               "Submit"
             }

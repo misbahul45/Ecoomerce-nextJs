@@ -54,7 +54,7 @@ const FormAddress = ({ id, orderData }:Props) => {
     }
 
     return (
-        <div className='w-full max-w-xl mx-auto mt-5'>
+        <div className='w-full max-w-xl mx-auto mt-5 px-2'>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
                     <FormField
@@ -121,7 +121,7 @@ const FormAddress = ({ id, orderData }:Props) => {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" disabled={loading} className="w-full flex justify-center gap-3">
+                    <Button type="submit" disabled={loading}  className="w-full flex justify-center gap-3">
                         {loading?
                         <>
                             <span>Loading...</span>

@@ -44,10 +44,10 @@ const FormEmail = () => {
                     </FormItem>
                 )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit">Send email</Button>
             </form>
             </Form>
-            <Link href={'/sign-in'} className='text-blue-500/80 mt-4 text-center text-lg block'>Back to sign in</Link>
+            <Link href={'/sign-in'} className='text-blue-600 mt-4 text-center text-lg block hover:text-blue-900 transition-all duration-75'>Back to sign in</Link>
     </div>
   )
 }
