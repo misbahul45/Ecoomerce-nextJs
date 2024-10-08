@@ -111,7 +111,7 @@ const FormProfile = ({ user }:{ user:User | null }) => {
         <Button variant={'default'} disabled={loading} type='submit' className='w-full flex items-center gap-2'>
           {loading?
             <>
-              <span>Looading...</span>
+              <span>Updating...</span>
               <Loader size='4' color='white' />
             </>
             :

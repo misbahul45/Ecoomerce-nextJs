@@ -32,7 +32,8 @@ const Sidebar = ({ user, categories }: Props) => {
     }, [showSidebar])
 
     return (
-        <aside className={`space-y-4 fixed px-4 py-2 top-16 left-0 md:hidden block h-[calc(100vh-4rem)] bg-slate-100/20 backdrop-blur-md ${showSidebar ? "sm:w-1/2 w-[70%] opacity-100 z-50" : "w-0 opacity-0 -z-0"} overflow-hidden transition-all duration-200`}>
+        <aside className={`space-y-4 fixed px-4 py-2 top-16 left-0 md:hidden h-[calc(100vh-4rem)] bg-slate-100/20 backdrop-blur-md flex flex-col justify-between ${showSidebar ? "sm:w-1/2 w-[70%] opacity-100 z-50" : "w-0 opacity-0 -z-0"} overflow-hidden transition-all duration-200`}>
+          <div className='space-y-3'>
             {user && (
                 <div className='flex gap-4 items-center justify-center py-1.5 rounded-md bg-slate-100 shadow-xl shadow-slate-800/20'>
                     <Avatar className='size-10 rounded-full shadow shadow-slate-700/20'>
@@ -41,28 +42,6 @@ const Sidebar = ({ user, categories }: Props) => {
                     <p className='font-bold text-slate-800'>{user?.name}</p>
                 </div>
             )}
-
-            <div className='absolute w-full bottom-0 left-0 px-4 pb-4 flex gap-2 justify-center'>
-                {user ?
-                    <Button onClick={logout} className='bg-red-500 text-white w-full font-semibold flex gap-2 items-center hover:bg-red-600 cursor-pointer rounded group transition-all duration-100'>
-                        <GrLogout size={20} className='group-hover:translate-x-2 transition-all duration-100' />
-                        <p className='group-hover:translate-x-2 transition-all duration-100'>Logout</p>
-                    </Button>
-                    :
-                    <>
-                        <Link href={'/sign-in'} className='w-full'>
-                            <Button className='w-full font-semibold'>
-                                Login
-                            </Button>
-                        </Link>
-                        <Link href={'/sign-up'} className='w-full'>
-                            <Button className='w-full font-semibold' variant='secondary'>
-                                Register
-                            </Button>
-                        </Link>
-                    </>
-                }
-            </div>
 
             {user?.role === "admin" && (
                 <div className='w-full'>
@@ -135,6 +114,28 @@ const Sidebar = ({ user, categories }: Props) => {
                     </div>
                 </div>
            </div>
+          </div>
+           <div className='pb-4 flex gap-2 justify-center'>
+                {user ?
+                    <Button onClick={logout} className='bg-red-500 text-white w-full font-semibold flex gap-2 items-center hover:bg-red-600 cursor-pointer rounded group transition-all duration-100'>
+                        <GrLogout size={20} className='group-hover:translate-x-2 transition-all duration-100' />
+                        <p className='group-hover:translate-x-2 transition-all duration-100'>Logout</p>
+                    </Button>
+                    :
+                    <>
+                        <Link href={'/sign-in'} className='w-full'>
+                            <Button className='w-full font-semibold'>
+                                Login
+                            </Button>
+                        </Link>
+                        <Link href={'/sign-up'} className='w-full'>
+                            <Button className='w-full font-semibold' variant='secondary'>
+                                Register
+                            </Button>
+                        </Link>
+                    </>
+                }
+            </div>
         </aside>
     )
 }
