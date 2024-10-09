@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { LuFacebook, LuInstagram, LuTwitter } from 'react-icons/lu';
-import { LiaWhatsappSquare } from 'react-icons/lia';
+import { LiaGithub, LiaGithubSquare, LiaWhatsappSquare } from 'react-icons/lia';
 const Footer = () => {
   return (
     <footer className='text-slate-600 py-8'>
@@ -47,7 +47,7 @@ const Footer = () => {
           <div className='space-y-4'>
             <h3 className='text-xl font-bold border-b-2 border-blue-400 pb-2 mb-2'>Follow Us</h3>
             <div className='flex justify-center items-center space-x-4'>
-                <Link href={'/'} className='p-2 rounded-full shadow-md shadow-slate-800/60 hover:bg-red-500 hover:text-slate-100 transition-all duration-100'>
+                <Link href={'/https://www.instagram.com/misbahulmu756/'} className='p-2 rounded-full shadow-md shadow-slate-800/60 hover:bg-red-500 hover:text-slate-100 transition-all duration-100'>
                     <LuInstagram size={24} />
                 </Link>
                 <Link href={'/'} className='p-2 rounded-full shadow-md shadow-slate-800/60 hover:bg-blue-700 hover:text-slate-100 transition-all duration-100'>
@@ -56,8 +56,8 @@ const Footer = () => {
                 <Link href={'/'} className='p-2 rounded-full shadow-md shadow-slate-800/60 hover:bg-blue-900 hover:text-slate-100 transition-all duration-100'>
                     <LuTwitter size={24} />
                 </Link>
-                <Link href={'/'} className='p-2 rounded-full shadow-md shadow-slate-800/60 hover:bg-green-600 hover:text-slate-100'>
-                    <LiaWhatsappSquare size={24} />
+                <Link href={'/'} className='p-2 rounded-full shadow-md shadow-slate-800/60 hover:bg-slate-700 hover:text-slate-100'>
+                    <LiaGithub size={24} />
                 </Link>
             </div>
           </div>
