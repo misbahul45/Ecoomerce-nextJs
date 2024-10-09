@@ -7,12 +7,21 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '../ui/input'
 import Link from 'next/link'
+import { useToast } from '../ui/use-toast'
+import { sendEmail } from '@/actions/email.actions'
+import { useRouter } from 'next/navigation'
+import Loader from '../ui/Loader'
+import { sleep } from '../create-post/FormProducts'
 
 const ForgotPasswordSchema=z.object({
     email:z.string().email({ message:'invalid email' }),
 })
 
+
 const FormEmail = () => {
+    const { toast }=useToast()
+    const router=useRouter()
+
     const form=useForm<z.infer<typeof ForgotPasswordSchema>>({
         mode:'onChange',
         resolver:zodResolver(ForgotPasswordSchema),
@@ -21,8 +30,25 @@ const FormEmail = () => {
         }
     })
 
-    const onSubmit=(values:z.infer<typeof ForgotPasswordSchema>)=>{
-        console.log(values)
+    const onSubmit=async({ email }:z.infer<typeof ForgotPasswordSchema>)=>{
+       const value:any=await sendEmail(email)
+       form.reset()
+       await sleep()
+       if(value?.success){
+        toast({
+            title:"Success",
+            description:"We have send you an email to reset your password",
+            variant:'default'
+        })
+        router.push(`/forgot-password/${value.idUser}/otp`)
+       }else{
+        toast({
+            title:"Error",
+            description:"User not found, please register first",
+            variant:'destructive'
+        })
+        router.push('/sign-up')
+       }
     }
 
   return (
@@ -44,7 +70,14 @@ const FormEmail = () => {
                     </FormItem>
                 )}
                 />
-                <Button type="submit">Send email</Button>
+                <Button disabled={form.formState.isSubmitting} type="submit" className='flex justify-center items-center'>{
+                    form.formState.isSubmitting ?<>
+                    <Loader size={'4'} color={'white'}/>
+                    <span>Checking...</span>
+                    </>
+                    :
+                    "Send email"
+                    }</Button>
             </form>
             </Form>
             <Link href={'/sign-in'} className='text-blue-600 mt-4 text-center text-lg block hover:text-blue-900 transition-all duration-75'>Back to sign in</Link>

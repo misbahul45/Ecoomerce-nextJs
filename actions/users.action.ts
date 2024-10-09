@@ -44,7 +44,6 @@ export const updateUserProfile=async(data:Partial<User>, id:string)=>{
                 ...data
             }
         })
-        revalidatePath('/profile')
         return { success:true, message:'Success update profile' }
     } catch (error) {
         console.log(error)
