@@ -15,7 +15,6 @@ const CarouselPoster = ({ images }: Props) => {
   React.useEffect(() => {
     if (!api) return;
 
-    // Update count and current slide
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap());
 

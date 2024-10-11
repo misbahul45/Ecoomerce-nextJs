@@ -89,7 +89,7 @@ const AboutProduct = ({ product, categoryProduct, user }: Props) => {
   
 
   return (
-    <div className="space-y-2 lg:w-[50vw]">
+    <div className="space-y-2 flex-1">
       <h1 className="md:text-lg text-[17px] text-slate-600">{product.name}</h1>
       <div>
         <p>
