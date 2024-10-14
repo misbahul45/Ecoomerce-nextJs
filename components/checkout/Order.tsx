@@ -9,6 +9,7 @@ import { MdDelete } from 'react-icons/md'
 import Link from 'next/link'
 import OrderPage from './OrderPage'
 import { useToast } from '../ui/use-toast'
+import { FaImage } from 'react-icons/fa'
 
 
 
@@ -43,7 +44,7 @@ const Order = ({ orderData }:Props) => {
             </Elements>
             :
             <p className='bg-green-200 text-slate-700 px-4 py-2.5 rounded-md my-4'>
-               Please waiting for product will be delivered
+              {orderData.status==='pending'?'Please waiting for product will be delivered':orderData.status==='delivered'?'Product has been delivered':'Product has been buyed'}
             </p>
         }
       </div>
@@ -68,6 +69,16 @@ const Order = ({ orderData }:Props) => {
             <Button className='ml-auto block font-semibold uppercase'>edit address</Button>
         </Link>
       </div>
+      {orderData.methode==='cod' && orderData.status !=='paid' && (
+        <div>
+          <h3 className='text-center font-semibold'>You have to pay for this order</h3>
+          <div className='w-full max-w-40 p-4 rounded-md h-auto mx-auto'>
+            <FaImage className='w-full h-full' />
+          </div>
+
+          <Button className='mx-auto block font-semibold uppercase '>Send Evidance</Button>
+        </div>
+      )}
     </div>
   )
 }

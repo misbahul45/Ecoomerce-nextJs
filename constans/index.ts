@@ -1,3 +1,5 @@
+import { link } from "fs"
+
 export const LOGIN_IMG=[
     '/img-sign-in/img-1.avif',
     '/img-sign-in/img-2.avif',
@@ -35,3 +37,26 @@ export const TABLE_ORDER=[
 ]
 
 export const REVIEW_STAR=[1,2,3,4,5]
+
+export const DASHBOARD_MENU=[
+    {
+        name:"home",
+        link:"/dashboard",
+    },
+    {
+        name:"users",
+        link:"/dashboard/users",
+    },
+    {
+        name:"products",
+        link:"/dashboard/products",
+    },
+    {
+        name:"invoices",
+        link:"/dashboard/invoices",
+    },
+    {
+        name:"other parts",
+        link:"/dashboard/other",
+    },
+]

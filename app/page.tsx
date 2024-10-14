@@ -23,11 +23,13 @@ const page = async() => {
   return (
     <section className='w-full pb-6'>
       {allPoster.length>0 && <CarouselPoster images={allPoster.map((poster)=>poster.image)} />}
-        <Products title='Feature Products'>
-          {featureProducts.map((product:Product)=>(
-              <PostProduct key={product.name} name={product.name} images={product.images} slug={product.slug} price={product.price} />
-          ))}
-        </Products>
+        {featureProducts.length>0 &&(
+          <Products title='Featured Products'>
+            {featureProducts.map((product:Product,index:number)=>(
+                  <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} price={product.price} />
+            ))}
+          </Products>
+        )}
         <Products title='Sell Products'>
           {sellProducts.map((product:Product,index:number)=>(
                 <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} price={product.price} />

@@ -140,15 +140,15 @@ model CartOnProduct {
 model Order {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  userId  String  @db.ObjectId
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  address String?
-  city    String?
-  country String?
-  postal  String?
-  methode String  @default("cod")
-  status  String  @default("pending")
-
+  userId   String           @db.ObjectId
+  user     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  address  String?
+  city     String?
+  country  String?
+  postal   String?
+  methode  String           @default("cod")
+  status   String           @default("pending")
+  date     DateTime         @default(now())
   products ProductOnOrder[]
 
   createdAt DateTime @default(now())

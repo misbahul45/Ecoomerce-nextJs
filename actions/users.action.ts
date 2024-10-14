@@ -1,5 +1,5 @@
 'use server'
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 import { signIn } from '@/lib/auth'
 import { AuthError } from 'next-auth'
 import prisma from '@/lib/prisma'
@@ -91,3 +91,19 @@ export const signInUser=async(data : Partial<User>)=>{
     }   
     
 }
+
+
+export const deleteUser=async(id:string)=>{
+    try {
+        await prisma.user.delete({
+            where:{
+                id
+            }
+        })
+        return { success:true, message:'Successfully deleted user' }
+    } catch (error) {
+        console.log(error)
+        return { success:false, message:'Failed to delete user' }
+    }
+}
+

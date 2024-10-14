@@ -56,3 +56,41 @@ export const getProducts = async (productName?: string) => {
     }
   }
 
+export const updateProducts=async(id:string)=>{
+    try {
+      const product=await prisma.product.findUnique({
+        where:{
+            id
+        }
+      })
+      if(product?.type==="SELL"){
+        return false
+      }
+        await prisma.product.update({
+            where:{
+                id
+            },
+            data:{
+               type:"SELL"
+            }
+        })
+        return true
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
+
+export const deleteProducts=async(id:string)=>{
+    try {
+        await prisma.product.delete({
+            where:{
+                id
+            }
+        })
+        return true
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}

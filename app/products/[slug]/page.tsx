@@ -92,7 +92,7 @@ const page = async({ params: { slug } }: Props) => {
   return (
     <section className='w-full pb-8 pt-2 px-4'>
       <div className='flex lg:flex-row flex-col gap-6 my-4'>
-        <ProductImages images={product?.images as string[]} />
+        <ProductImages images={product?.images as string[]} type={product?.type as "FEATURE" | "SELL"} />
         {product?.type==='SELL' && <AboutProduct product={product} categoryProduct={categoryProduct} user={user}/>}
       </div>
       <br />

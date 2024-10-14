@@ -14,14 +14,14 @@ const ProductImages = ({ images, type }: Props) => {
 
 
   return (
-    <div className='space-y-5 flex-1'>
-      <Carousel setApi={setApi}>
+    <div className={`w-full flex-1 flex gap-4 ${type === 'FEATURE' ? 'flex-row' : 'flex-col'} justify-center items-center`}>
+      <Carousel setApi={setApi} className='w-full'>
         {images.length > 0 ? (
           <CarouselContent>
             {images.map((image, index) => (
               <CarouselItem key={index} className="w-full">
                 <div className="relative w-full h-auto">
-                  <Image src={image} alt={`Product image ${index + 1}`} width={500} height={500} className={`w-full h-full object-cover shadow-xl shadow-slate-800/20 rounded-xl`} loading="lazy" />
+                  <Image src={image} alt={`Product image ${index + 1}`} width={500} height={500} className={`w-full md:h-[65vh] h-[40vh] object-cover shadow-xl shadow-slate-800/20 rounded-xl`} loading="lazy" />
                 </div> 
               </CarouselItem>
             ))}
@@ -30,8 +30,7 @@ const ProductImages = ({ images, type }: Props) => {
           <div>No images available</div>
         )}
       </Carousel>
-
-      <div className="gap-4 flex md:max-h-[70vh] md:max-w-[50vw] w-full overflow-auto no-scrollbar p-2">
+      <div className={`w-auto overflow-auto no-scrollbar p-2 ${type==='FEATURE'?"space-y-4":"flex items-center gap-4"}`}>
         {images.map((image, index) => (
           <Image
             onClick={() => {
@@ -43,7 +42,7 @@ const ProductImages = ({ images, type }: Props) => {
             alt={`Thumbnail ${index + 1}`}
             width={100}
             height={100}
-            className={`lg:size-16 md:size-14 size-8 mb-4 object-cover rounded shadow-lg shadow-slate-800/20 cursor-pointer hover:scale-110 transition-all duration-75 ${indexImage === index ? 'scale-110 shadow-xl shadow-black/30 border-blue-400 border-2' : ''}`}
+            className={`lg:size-16 h-auto md:size-14 size-10 mb-4 object-cover rounded shadow-lg shadow-slate-800/20 cursor-pointer hover:scale-110 transition-all duration-75 ${indexImage === index ? 'scale-110 shadow-xl shadow-black/30 border-blue-400 border-2' : ''}`}
           />
         ))}
       </div>

@@ -4,6 +4,8 @@ import { Button } from '../ui/button';
 import { useToast } from '../ui/use-toast';
 import { addProductsTocart } from '@/actions/carts.actions';
 import { useRouter } from 'next/navigation';
+import { sleep } from '../create-post/FormProducts';
+import Loader from '../ui/Loader';
 
 interface Props {
   product: Product;
@@ -16,8 +18,9 @@ const AboutProduct = ({ product, categoryProduct, user }: Props) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [selectColor, setSelectColor] = useState<string>(''); 
   const [selectSize, setSelectSize] = useState<string>('');
-  const { toast }=useToast()
 
+  const [loading, setLoading] = useState(false)
+  const { toast }=useToast()
 
   const increaseQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -53,7 +56,7 @@ const AboutProduct = ({ product, categoryProduct, user }: Props) => {
   const handleToCart = async() => {
     if(!user?.id){
       router.push('/sign-in')
-      return
+      return;
     }
     const error = validateSelections();
     if (error) {
@@ -64,6 +67,8 @@ const AboutProduct = ({ product, categoryProduct, user }: Props) => {
       });
       return;
     }
+    setLoading(true)
+    await sleep()
     const message=await addProductsTocart({
       productId:product.id,
       quantity:quantity,
@@ -85,11 +90,12 @@ const AboutProduct = ({ product, categoryProduct, user }: Props) => {
         variant: 'destructive',
       });
     }
+    setLoading(false)
   };
   
 
   return (
-    <div className="space-y-2 flex-1">
+    <div className="space-y-2 w-full max-w-sm">
       <h1 className="md:text-lg text-[17px] text-slate-600">{product.name}</h1>
       <div>
         <p>
@@ -145,7 +151,16 @@ const AboutProduct = ({ product, categoryProduct, user }: Props) => {
           </div>
           <p className='text-xl text-gray-700 font-bold my-4'>Total: {(product.price * quantity).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</p>
           <div className="space-y-2 mt-2 w-[80%]">
-            <Button onClick={handleToCart} className="w-full bg-violet-600 hover:bg-violet-700 font-semibold">Add to cart</Button>
+            <Button onClick={handleToCart} disabled={loading} className="flex items-center justify-center w-full bg-violet-600 hover:bg-violet-700 font-semibold">
+              {loading?
+                <>
+                  <Loader size='4' color='white'/>
+                  <span>Loading...</span>
+                </>
+                :
+                "Add to cart"
+              }
+            </Button>
           </div>
         </div>
       </div>
