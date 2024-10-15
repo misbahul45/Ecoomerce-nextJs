@@ -4,7 +4,7 @@ import ButtonUpdate from '@/components/dashboard/ButtonUpdate';
 import { totalPrice } from '@/components/profile/ShowProfile';
 import { AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import prisma from '@/lib/prisma';
 import { Avatar } from '@radix-ui/react-avatar';
 import Link from 'next/link';
@@ -15,6 +15,13 @@ interface Props{
     params:{
         route:string
     }
+}
+
+export async function generateMetadata({ params: { route } }: Props) {
+  return {
+    title: `${route} - dashboard - Misbahul's Shop`,
+    description: `${route} - dashboard for Misbahul's Shop`,
+  }
 }
 
 const fetchData=async(route:string)=>{
@@ -40,9 +47,10 @@ const fetchData=async(route:string)=>{
       data=await prisma.order.findMany({
         include:{
           user:true,
+          evidance:true,
           products:{
             include:{
-              product:true
+              product:true,
             }
           }
         }
@@ -66,6 +74,7 @@ const fetchData=async(route:string)=>{
 const page = async({ params: { route } }:Props) => {
     const data=await fetchData(route)
      let tableDisplay;
+
 
     if(route==='users'){
       tableDisplay=(
@@ -143,16 +152,17 @@ const page = async({ params: { route } }:Props) => {
     }else if(route==='invoices'){
       tableDisplay=(
         <Table>
+          <TableCaption>A list of invoices.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>No</TableHead>
               <TableHead>Name</TableHead>
-              <TableHead>Locations</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Total Price</TableHead>
+              <TableHead className='min-w-64'>Locations</TableHead>
+              <TableHead className='min-w-32'>Date</TableHead>
+              <TableHead className='min-w-32'>Total Price</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Methode</TableHead>
-              <TableHead>Check</TableHead>
+              <TableHead className='min-w-56'>Check</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -163,20 +173,25 @@ const page = async({ params: { route } }:Props) => {
                 <TableCell>{order.address}</TableCell>
                 <TableCell>{new Date(order.date).toLocaleDateString().replaceAll('/','-')}</TableCell>
                 <TableCell>{totalPrice(order.products)}</TableCell>
-                <TableCell className='flex items-center flex-wrap gap-2'>
+                <TableCell className='flex items-center min-w-56 flex-wrap gap-2'>
                   <span className={`${order.status==='pending'?"text-yellow-600 bg-yellow-200":order.status==="delivery"?"bg-slate-200 text-slate-600":"bg-green-200 text-green-600"} px-2 py-1 rounded-full`}>
                     {order.status}
                   </span>
-                  <ButtonStatus id={order.id} />
+                  {order.status!=="paid" &&(
+                    <ButtonStatus id={order.id} />
+                  )}
                 </TableCell>
                 <TableCell className='uppercase font-semibold'>
                   <span className='text-slate-700 px-4 py-1 rounded-full bg-slate-200'>{order.methode}</span>
                 </TableCell>
                 <TableCell>
                   {order.status==='pending' || order.status==='delivered' ? (
-                     <Link href={`/products/order/${order.id}`}>
-                      <Button disabled={order.status!=='pending' || order.status!=='delivered'}>Check</Button>
-                    </Link>
+                    <Button disabled={order.status==='paid' || !order.evidance} variant={'outline'} className='flex items-center gap-2'>
+                      <Link href={`/products/order/${order.id}`}>
+                        Check
+                        {order.evidance && (<span className='p-1 bg-red-300 text-red-800 rounded-full'>!</span>)}
+                      </Link>
+                    </Button>
                   )
                   :
                   (

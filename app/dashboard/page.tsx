@@ -1,5 +1,6 @@
 import { getAllLength, getAllValuesByMonth } from '@/actions/dashboard.action'
 import Chart from '@/components/dashboard/Chart'
+import { Metadata } from 'next'
 import React from 'react'
 import { FaMoneyCheckAlt, FaRegImages, FaRegWindowRestore } from 'react-icons/fa'
 import { HiUsers } from 'react-icons/hi'
@@ -13,6 +14,11 @@ const ICON={
   "Coment":<LiaCommentSolid size={18} />,
   "Order":<FaMoneyCheckAlt size={18} />,
   "Poster":<FaRegImages size={18} />
+}
+
+export const metadata:Metadata = {
+  title: "Dashboard - Misbahul's Shop",
+  description: "Dashboard for Misbahul's Shop",
 }
 
 const page = async() => {

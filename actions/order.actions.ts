@@ -41,3 +41,18 @@ export const updateProductOrder = async (orderId: string, value:any) => {
         return false
     }
 }
+
+
+export const deleteOrder=async(orderId:string)=>{
+    try {
+        await prisma.order.delete({
+            where:{
+                id:orderId
+            }
+        })
+        return true
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}

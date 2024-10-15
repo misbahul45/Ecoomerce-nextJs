@@ -34,7 +34,7 @@ const PostProduct = ({ name, images, slug, price }: Props) => {
             className={`w-full h-full object-cover shadow-xl shadow-slate-500/30 group-hover:scale-105 transition-all duration-100`} 
           />
           <AvatarFallback className='rounded-md'>
-            <div className="w-full h-full bg-gradient-to-r from-slate-200 via-slate-600 to-gray-400 animated-background"></div>
+            <div className="w-full h-full bg-gradient-to-r from-slate-50/20 via-slate-100 to-gray-400 animated-background"></div>
           </AvatarFallback>
         </Avatar>
       </div>

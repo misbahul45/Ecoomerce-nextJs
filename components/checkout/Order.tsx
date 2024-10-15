@@ -5,12 +5,14 @@ import { Elements }  from "@stripe/react-stripe-js"
 import { loadStripe } from '@stripe/stripe-js'
 import Image from 'next/image'
 import { Button } from '../ui/button'
-import { MdDelete } from 'react-icons/md'
 import Link from 'next/link'
 import OrderPage from './OrderPage'
+import Evidance from './Evidance'
+import { sleep } from '../create-post/FormProducts'
+import { deleteOrder } from '@/actions/order.actions'
+import { useRouter } from 'next/navigation'
 import { useToast } from '../ui/use-toast'
-import { FaImage } from 'react-icons/fa'
-
+import { Loader } from 'lucide-react'
 
 
 const stripePromise=loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string)
@@ -21,11 +23,35 @@ interface Props{
 
 
 const Order = ({ orderData }:Props) => {
+    const [loading,setLoading]=React.useState(false)
+    const router=useRouter()
+    const { toast }=useToast()
+  
     const products=orderData.products
     const amount = React.useMemo(() => {
         return orderData.products.reduce((a, b) => a + (b.quantity * b.product.price), 0)
       }, [orderData])
 
+      const handleCancelOrder=async()=>{
+        setLoading(true)
+        await sleep()
+        const success=await deleteOrder(orderData.id)
+        if(success){
+          toast({
+            title:'Success',
+            description:'Order canceled successfully',
+            variant:'default'
+          })
+          router.push('/')
+        }else{
+          toast({
+            title:'Error',
+            description:'Something went wrong',
+            variant:'destructive'
+          })
+        }
+        setLoading(false)
+      }
 
   return (
     <div className='w-full space-y-4'>
@@ -43,7 +69,7 @@ const Order = ({ orderData }:Props) => {
                 <OrderPage amount={amount} orderId={orderData.id} />
             </Elements>
             :
-            <p className='bg-green-200 text-slate-700 px-4 py-2.5 rounded-md my-4'>
+            <p className={`${orderData.status!=='paid'?"bg-green-200 text-slate-700":"bg-yellow-200 text-yellow-700"} px-4 py-2.5 rounded-md my-4`}>
               {orderData.status==='pending'?'Please waiting for product will be delivered':orderData.status==='delivered'?'Product has been delivered':'Product has been buyed'}
             </p>
         }
@@ -65,19 +91,24 @@ const Order = ({ orderData }:Props) => {
       <div className='mx-auto border-2 space-y-2 border-slate-700 shadow-lg shadow-slate-600/20 py-2 px-3 max-w-3xl rounded-lg'>
         <h2 className='font-semibold'>Address</h2>
         <p className=''>{orderData.address}</p>
-        <Link href={`/checkout/${orderData.id}/address`}>
-            <Button className='ml-auto block font-semibold uppercase'>edit address</Button>
-        </Link>
-      </div>
-      {orderData.methode==='cod' && orderData.status !=='paid' && (
-        <div>
-          <h3 className='text-center font-semibold'>You have to pay for this order</h3>
-          <div className='w-full max-w-40 p-4 rounded-md h-auto mx-auto'>
-            <FaImage className='w-full h-full' />
-          </div>
-
-          <Button className='mx-auto block font-semibold uppercase '>Send Evidance</Button>
+        <div className="flex gap-4">
+          <Link href={`/checkout/${orderData.id}/address`}>
+              <Button className='ml-auto block font-semibold uppercase'>edit address</Button>
+          </Link>
+          <Button disabled={loading || orderData.status!=='pending'} onClick={handleCancelOrder} variant={'destructive'} className='flex gap-2'>
+            {loading?
+              <>
+                <span>Canceling...</span>
+                <Loader size="4" color='white' />
+              </>
+              :
+              "Cancel Order"            
+            }
+          </Button>
         </div>
+      </div>
+      {orderData.methode==='cod' && orderData.status !=='paid' && orderData.evidance==null && (
+        <Evidance orderId={orderData.id} />
       )}
     </div>
   )

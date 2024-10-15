@@ -150,6 +150,18 @@ model Order {
   status   String           @default("pending")
   date     DateTime         @default(now())
   products ProductOnOrder[]
+  evidance Evidance?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Evidance {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  img     String
+  orderId String @unique @db.ObjectId
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

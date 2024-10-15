@@ -37,9 +37,6 @@ const Checkout = async({params:{ order }}:Props) => {
  
   return (
     <section className='py-6 relative'>
-      {orderData.status !=='pending' && (
-        <div className='absolute top-0 left-0 w-full h-full bg-black/20 z-30 backdrop-blur rounded-lg'></div>
-      )}
       <CheckoutNav pathName={pathName} />
       <h1 className='text-3xl font-bold capitalize text-center mt-5'>{pathName} Checkout</h1>
       {pathName==='address' && (
