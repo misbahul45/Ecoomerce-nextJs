@@ -4,7 +4,6 @@ import React from 'react'
 
 
 const AdminMiddleware = ({user }:{ user:null | User }) => {
-    console.log(user)
     const router=useRouter()
     if(!user){
         router.push('/sign-in')

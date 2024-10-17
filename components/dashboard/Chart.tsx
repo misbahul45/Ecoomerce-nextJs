@@ -30,6 +30,7 @@ const chartConfig = {
 };
 
 export default function Chart({ chartData }: Props) {
+  console.log(chartData)
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   return (

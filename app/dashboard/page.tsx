@@ -45,6 +45,7 @@ const Page = () => {
     fetchData();
   }, []);
 
+  console.log(chartData)
   return (
     <div className='w-full h-full py-2'>
       <div className="w-full lg:max-w-5xl max-w-[80%] mx-auto flex gap-6 items-center justify-center flex-wrap px-6">
