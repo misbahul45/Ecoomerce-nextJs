@@ -1,9 +1,7 @@
 import React from 'react'
 import { Button } from '../ui/button'
 import { MdDelete } from 'react-icons/md'
-import { deleteProductFromCart } from '@/actions/carts.actions'
-import { useRouter } from 'next/navigation'
-import { set } from 'zod'
+import { deleteProductFromCart } from '@/actions/carts.actions' 
 
 interface Props {
     productId: string
@@ -12,7 +10,6 @@ interface Props {
 }
 
 const DeleteProduct = ({productId, cartId, setProductCheckout}:Props) => {
-    const router=useRouter()
     const handleDeleteProduct = async() => {
         setProductCheckout((prev) => prev.filter((product) => product.product['id'] !== productId))
         await deleteProductFromCart(cartId,productId)
