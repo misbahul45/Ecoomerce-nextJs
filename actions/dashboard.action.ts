@@ -3,12 +3,12 @@
 import prisma from "@/lib/prisma"
 
 export const getAllLength = async () => {
-    const usersLength=prisma.user.count()
-    const productsLength=prisma.product.count()
-    const categoriesLength=prisma.category.count()
-    const comentsLength=prisma.comment.count()
-    const ordersLength=prisma.order.count()
-    const postersLength=prisma.poster.count()
+    const usersLength=await prisma.user.count()
+    const productsLength=await prisma.product.count()
+    const categoriesLength=await prisma.category.count()
+    const comentsLength=await prisma.comment.count()
+    const ordersLength=await prisma.order.count()
+    const postersLength=await prisma.poster.count()
     return{
         usersLength,
         productsLength,

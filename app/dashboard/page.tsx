@@ -22,7 +22,7 @@ export const metadata:Metadata = {
 }
 
 const page = async() => {
-  const {usersLength,productsLength,categoriesLength,comentsLength,ordersLength,postersLength}= await getAllLength();
+  const {usersLength,productsLength,categoriesLength,comentsLength,ordersLength,postersLength} = await getAllLength();
   const allData=[
     {
       name:'User',
@@ -55,7 +55,7 @@ const page = async() => {
   return (
     <div className='w-full h-full py-2'>
       <div className="w-full lg:max-w-5xl max-w-[80%] mx-auto flex gap-6 items-center justify-center flex-wrap px-6">
-        {allData.map((item,index)=>(
+        {allData?.map((item,index)=>(
           <div key={index} className='flex flex-col justify-center h-full items-center flex-1 py-2 px-4 shadow-xl shadow-slate-700/20 rounded-lg animate-1-pulse'>
             <p className='lg:text-3xl md:Text-2xl text-sm font-bold'>{item.count}</p>
             <div className="flex gap-3 items-center">
