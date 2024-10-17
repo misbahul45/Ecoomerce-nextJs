@@ -1,6 +1,8 @@
+import CarouselComment from '@/components/home/CarouselComment'
 import CarouselPoster from '@/components/home/CarouselPoster'
 import Information from '@/components/home/Information'
 import Products from '@/components/home/Products'
+import { AvatarImage, Avatar, AvatarFallback } from '@/components/ui/avatar'
 import PostProduct from '@/components/ui/PostProduct'
 import prisma from '@/lib/prisma'
 import React from 'react'
@@ -27,12 +29,15 @@ const page = async() => {
     },
     include:{
       author:true,
+      rating:true
     },
-    take:6
+    take:9
   })
   return (
     <section className='w-full pb-6'>
       {allPoster.length>0 && <CarouselPoster images={allPoster.map((poster)=>poster.image)} />}
+        <h2 className='text-center font-semibold lg:text-2xl md:text-xl text-lg my-4'>Our Service Response</h2>
+        <CarouselComment comments={comments} />
         <Products title='Sell Products'>
           {sellProducts.map((product:Product,index:number)=>(
                 <PostProduct key={product.id} name={product.name} images={product.images} slug={product.slug} price={product.price} />
@@ -46,8 +51,6 @@ const page = async() => {
             ))}
           </Products>
         )}
-        <h2 className='text-center font-semibold lg:text-2xl md:text-xl text-lg'>Our Service Response</h2>
- 
     </section>
   )
 }

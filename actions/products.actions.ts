@@ -94,3 +94,24 @@ export const deleteProducts=async(id:string)=>{
         return false
     }
 }
+
+
+export const getAllProduct=async(page:number)=>{
+
+    try{
+        const products=await prisma.product.findMany({
+          take:8,
+          skip:(page-1)*8,
+          where:{
+            type:"SELL"
+          },
+          orderBy:{
+            createdAt:"desc"
+          }
+        })  
+        return products
+    }catch(error){
+        console.log(error)
+        return []
+    }
+}

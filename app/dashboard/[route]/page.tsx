@@ -7,7 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import prisma from '@/lib/prisma';
 import { Avatar } from '@radix-ui/react-avatar';
+import Image from 'next/image';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import React from 'react'
 
 
@@ -60,10 +62,15 @@ const fetchData=async(route:string)=>{
     case 'other':
       data={
         categories:await prisma.category.findMany(),
-        comments:await prisma.comment.findMany(),
-        poster:await prisma.poster.findMany()
+        comments:await prisma.comment.findMany({
+          include:{
+            author:true,
+            rating:true
+          }
+        }),
+        posters:await prisma.poster.findMany()
       }
-
+    break;
     default:  
       data=null;
     break;
@@ -72,9 +79,8 @@ const fetchData=async(route:string)=>{
 }
 
 const page = async({ params: { route } }:Props) => {
-    const data=await fetchData(route)
-     let tableDisplay;
-
+    const data:any=await fetchData(route)
+    let tableDisplay;
 
     if(route==='users'){
       tableDisplay=(
@@ -89,7 +95,7 @@ const page = async({ params: { route } }:Props) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.map((user:any,index)=>(
+            {data?.map((user:any,index:any)=>(
               <TableRow key={user.id}>
                 <TableCell>{index+1}</TableCell>
                 <TableCell>{user.name}</TableCell>
@@ -124,7 +130,7 @@ const page = async({ params: { route } }:Props) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.map((product:any,index)=>(
+            {data?.map((product:any,index:any)=>(
               <TableRow key={product.id}>
                 <TableCell>{index+1}</TableCell>
                 <TableCell>
@@ -166,7 +172,7 @@ const page = async({ params: { route } }:Props) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.map((order:any,index)=>(
+            {data?.map((order:any,index:any)=>(
               <TableRow key={order.id}>
                 <TableCell>{index+1}</TableCell>
                 <TableCell>{order.user.name}</TableCell>
@@ -204,6 +210,91 @@ const page = async({ params: { route } }:Props) => {
           </TableBody>
         </Table>
       )
+    }else if(route==='other'){
+      tableDisplay=(
+        <div className='spce py-4'>
+          <Table>
+            <TableCaption>A list of Comments</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>No</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Rating</TableHead>
+                <TableHead>Comment</TableHead>
+                <TableHead>Delete</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+                {data?.comments.map((comment:any,index:any)=>(
+                  <TableRow key={comment.id}>
+                    <TableCell>{index+1}</TableCell>
+                    <TableCell>{comment.author.name}</TableCell>
+                    <TableCell>{Array.from({ length: comment.rating.rating }).map((i, index) => (<span key={index} className='md:text-md text-sm'>⭐</span>))}</TableCell>
+                    <TableCell>{comment.content}</TableCell>
+                    <TableCell>
+                      <ButtonDelete id={comment.id} type='comment' />
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+          <br />
+          <Table>
+            <TableCaption>A list of Poster</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>No</TableHead>
+                <TableHead>Image</TableHead>
+                <TableHead>Delete</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data?.posters.map((poster:any,index:any)=>(
+                <TableRow key={poster.id}>
+                  <TableCell>{index+1}</TableCell>
+                  <TableCell>
+                    <Image
+                      src={poster.image}
+                      alt={poster.title}
+                      width={100}
+                      height={100}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <ButtonDelete id={poster.id} type='poster'  />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+
+          <br />
+
+          <Table>
+            <TableCaption>A list of Category</TableCaption>
+            <TableHeader>
+              <TableRow>  
+                <TableHead>No</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead>Delete</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data?.categories.map((category:any,index:any)=>(
+                <TableRow key={category.id}>
+                  <TableCell>{index+1}</TableCell>
+                  <TableCell>{category.category}</TableCell>
+                  <TableCell>
+                    <ButtonDelete id={category.id} type='categories' />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )
+    }else{
+      return notFound()
     }
 
   return (

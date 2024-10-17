@@ -8,6 +8,9 @@ import React from "react"
 import { deleteProducts } from "@/actions/products.actions"
 import { Button } from "../ui/button"
 import { useToast } from "../ui/use-toast"
+import { deletePoster } from "@/actions/poster.actions"
+import { deleteCategory } from "@/actions/category.actions"
+import { deleteComment } from "@/actions/comments.actions"
 
 interface Props {
     id:string
@@ -45,6 +48,45 @@ const ButtonDelete = ({id,type}:Props) => {
         })
     }
 
+    const handleDeletePoster=async(id:string)=>{
+        setLoading(true)
+        await sleep()
+        await deletePoster(id)
+        router.refresh()
+        setLoading(false)
+        toast({
+            title:'Success',
+            description:'Poster deleted successfully',
+            variant:'default'
+        })
+    }
+
+    const handleDeleteCategory=async(id:string)=>{
+        setLoading(true)
+        await sleep()
+        await deleteCategory(id)
+        router.refresh()
+        setLoading(false)
+        toast({
+            title:'Success',
+            description:'Category deleted successfully',
+            variant:'default'
+        })
+    }
+
+    const handleDeleteComment=async(id:string)=>{
+        setLoading(true)
+        await sleep()
+        await deleteComment(id)
+        router.refresh()
+        setLoading(false)
+        toast({
+            title:'Success',
+            description:'Comment deleted successfully',
+            variant:'default'
+        })
+    }
+
     let handleDelete;
 
     switch(type){
@@ -53,6 +95,16 @@ const ButtonDelete = ({id,type}:Props) => {
         break;
         case "products":
             handleDelete=()=>handleDeleteProduct()
+        break;
+        case "poster":
+            handleDelete=()=>handleDeletePoster(id)
+        break;
+        case "categories":
+            handleDelete=()=>handleDeleteCategory(id)
+        break;
+        case "comment":
+            handleDelete=()=>handleDeleteComment(id)
+        break;
     }
   return (
     <Button onClick={handleDelete} disabled={loading} variant={'destructive'}>

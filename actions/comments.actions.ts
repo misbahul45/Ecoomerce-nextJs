@@ -36,3 +36,18 @@ export const createComment=async(newComment:any)=>{
         return false;
     }
 }
+
+export const deleteComment=async(commentId:string)=>{
+    try{
+        await prisma.comment.delete({
+            where:{
+                id:commentId
+            }
+        })
+        revalidatePath('/products')
+        return true
+    }catch(error){
+        console.log(error)
+        return false
+    }
+}

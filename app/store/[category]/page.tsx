@@ -1,4 +1,3 @@
-import DisplayProducts from '@/components/store/DisplayProducts'
 import PostProduct from '@/components/ui/PostProduct'
 import prisma from '@/lib/prisma'
 import React from 'react'
@@ -20,7 +19,6 @@ const page = async({ params: { category } }: pageProps) => {
       categoryId:categoryProduct?.id
     }
   }) as Product[]
-
 
   return (
     <section>
