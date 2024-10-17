@@ -21,67 +21,44 @@ export const getAllLength = async () => {
 
 export const getAllValuesByMonth = async () => {
     const currentYear = new Date().getFullYear();
-    let resultArray = [];
+
+    const monthQueries = [];
 
     for (let month = 1; month <= 12; month++) {
-        const gte = new Date(currentYear, month - 1, 1); 
-        const lte = new Date(currentYear, month, 0);    
+        const gte = new Date(currentYear, month - 1, 1); // First day of the month
+        const lte = new Date(currentYear, month, 0);     // Last day of the month
+        
+        monthQueries.push(
+            (async () => {
+                const orders = await prisma.order.count({
+                    where: { createdAt: { gte, lte } },
+                });
+                const users = await prisma.user.count({
+                    where: { createdAt: { gte, lte } },
+                });
+                const products = await prisma.product.count({
+                    where: { createdAt: { gte, lte } },
+                });
+                const comments = await prisma.comment.count({
+                    where: { createdAt: { gte, lte } },
+                });
+                const categories = await prisma.category.count({
+                    where: { createdAt: { gte, lte } },
+                });
 
-        const orders = await prisma.order.count({
-            where: {
-                createdAt: {
-                    gte,
-                    lte
-                },
-            },
-        });
-
-        const users = await prisma.user.count({
-            where: {
-                createdAt: {
-                    gte,
-                    lte
-                },
-            },
-        });
-
-        const products = await prisma.product.count({
-            where: {
-                createdAt: {
-                    gte,
-                    lte
-                },
-            },
-        });
-
-        const comments = await prisma.comment.count({
-            where: {
-                createdAt: {
-                    gte,
-                    lte
-                },
-            },
-        });
-
-        const categories = await prisma.category.count({
-            where: {
-                createdAt: {
-                    gte,
-                    lte
-                },
-            },
-        });
-
-
-        resultArray.push({
-            month: month,
-            orders,
-            users,
-            products,
-            comments,
-            categories
-        });
+                return {
+                    month,
+                    orders,
+                    users,
+                    products,
+                    comments,
+                    categories,
+                };
+            })()
+        );
     }
 
-    return resultArray;
+    const data = await Promise.all(monthQueries);
+    return data;
 };
+
